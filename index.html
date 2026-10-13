@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e63032">
+  <meta name="description" content="Shivam Kapadia — your friendly neighborhood engineer. Swing through a 3D city of software, hardware, and machine learning projects.">
+  <meta property="og:title" content="Shivam Kapadia — Into the Shivam-Verse">
+  <meta property="og:description" content="One engineer. Many dimensions. A scroll-driven, 3D comic-book portfolio.">
+  <title>Shivam Kapadia · Into the Shivam-Verse</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/barlow-condensed-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/space-grotesk-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
+</head>
+<body>
+  <a class="skip-link" href="#story">Skip to portfolio</a>
+  <div id="city" aria-hidden="true"></div>
+  <div class="print-texture" aria-hidden="true"></div>
+  <div class="scene-vignette" aria-hidden="true"></div>
+  <div id="swing-caption" class="swing-caption" aria-hidden="true">THWIP<span>!</span></div>
+  <header class="site-header">
+    <a class="wordmark" href="#home" aria-label="Shivam Kapadia home"><span class="brand-mask" aria-hidden="true"><i></i><i></i></span><span>SHIVAM<span class="wordmark-sub">YOUR FRIENDLY NEIGHBORHOOD ENGINEER</span></span></a>
+    <nav aria-label="Main navigation">
+      <a class="nav-link" href="#work">THE WORK <span>↗</span></a>
+      <a class="nav-link" href="#about">THE PERSON <span>↗</span></a>
+      <a class="contact-link" href="#contact">SEND A SIGNAL <span>↗</span></a>
+    </nav>
+    <button class="mobile-menu" type="button" aria-label="Open city map" data-open-map>MAP ↗</button>
+  </header>
+  <aside class="issue-stamp" aria-label="Portfolio edition"><span>EARTH—SK</span><b>ISSUE NO. 001</b><span>CHAMPAIGN ↔ NEW YORK</span></aside>
+  <div class="scene-caption" aria-hidden="true"><span class="caption-cross">+</span><span id="district-label">QUEENS, NEW YORK</span><span class="caption-line"></span><span id="scene-coordinates">40.7282° N / 73.7949° W</span></div>
+  <button id="motion-toggle" class="motion-toggle" type="button" aria-pressed="false" title="Pause animated city">Ⅱ <span>PAUSE MOTION</span></button>
+  <p id="scene-status" class="scene-status" role="status">Drawing the neighborhood…</p>
+  <main id="story">
+    <section class="chapter hero" id="home" data-chapter="0" aria-labelledby="hero-title">
+      <div class="chapter-copy">
+        <div class="eyebrow"><span class="status-dot"></span> COMPUTER ENGINEERING @ UIUC <span class="edition">’28</span></div>
+        <h1 id="hero-title">YOUR FRIENDLY<br><span class="red">NEIGHBORHOOD</span><br>ENGINEER<span class="red">.</span></h1>
+        <div class="hero-byline"><span class="byline-rule"></span> NO RADIOACTIVE SPIDER. JUST A LOT OF CURIOSITY.</div>
+        <p class="intro">Hey, I’m <strong>Shivam Kapadia.</strong> I build across software, hardware, and everything in between. Every rooftop has a story. Let’s take the scenic route.</p>
+        <div class="actions"><a class="button primary" href="#work">ENTER THE SHIVAM-VERSE <span>↘</span></a><button class="button icon-button" data-open-map aria-label="Open city and project map">⊞</button></div>
+        <div class="hero-footnote"><span class="web-mark" aria-hidden="true">✳</span><span>11 PROJECTS. ONE VERY CURIOUS HUMAN.<br><b>SCROLL TO TAKE A LEAP.</b></span></div>
+      </div>
+      <div class="comic-note hero-note" aria-hidden="true">LET’S DO THIS<br><strong>ONE MORE TIME.</strong></div>
+      <div class="chapter-number" aria-hidden="true">01<span>/ ORIGIN STORY</span></div>
+    </section>
+    <section class="chapter" id="work" data-chapter="1" aria-labelledby="work-title">
+      <div class="chapter-copy">
+        <div class="eyebrow"><span class="chapter-chip">02</span> MIDTOWN / SELECTED WORK</div>
+        <h2 id="work-title">BIG IDEAS.<br><span class="red">REAL-WORLD</span><br>RESPONSIBILITY.</h2>
+        <p class="intro">Autonomous agents can spend money. I build the systems that make sure they spend it safely.</p>
+        <article class="feature-card">
+          <div class="card-kicker"><span>FEATURED MISSION / 001</span><span>↗</span></div>
+          <h3>METER<span class="outline-type">.</span></h3>
+          <p>An LLM spend-control system with a treasury agent, payment rails, and human-approved spending mandates.</p>
+          <div class="mini-stats"><span><b>205</b> payment tests</span><span><b>7</b> Python modules</span><span><b>~4×</b> faster ledger reads</span></div>
+          <button class="text-link" data-project="1">OPEN THE CASE FILE <span>↗</span></button>
+        </article>
+        <button class="button primary" data-open-projects>ALL 11 PROJECTS <span>↗</span></button>
+      </div>
+      <div class="comic-note" aria-hidden="true">WITH GREAT POWER<br>COMES GREAT<br><strong>RELIABILITY.</strong></div>
+      <div class="chapter-number" aria-hidden="true">02<span>/ THE BIG LEAP</span></div>
+    </section>
+    <section class="chapter" id="lab" data-chapter="2" aria-labelledby="lab-title">
+      <div class="chapter-copy">
+        <div class="eyebrow"><span class="chapter-chip">03</span> OSCORP TOWER / THE LAB</div>
+        <h2 id="lab-title">A LITTLE<br><span class="red">MAD SCIENCE.</span><br>A LOT OF RIGOR.</h2>
+        <p class="intro">Circuits, robotic drummers, and machine learning. This is where curiosity gets its hands dirty.</p>
+        <div class="mission-list">
+          <button data-project="8"><span class="mission-id">01 / HARDWARE</span><strong>A dishwasher.<br>Zero microcontrollers.</strong><span class="mission-arrow">↗</span></button>
+          <button data-project="9"><span class="mission-id">02 / ROBOTICS</span><strong>BeatBot: a robot<br>with rhythm.</strong><span class="mission-arrow">↗</span></button>
+          <a href="archive.html#research"><span class="mission-id">03 / PUBLISHED RESEARCH</span><strong>Machine learning.<br>Meet air quality.</strong><span class="mission-arrow">↗</span></a>
+        </div>
+        <p class="small-note">NO GOBLIN SERUM WAS USED IN THESE EXPERIMENTS.</p>
+      </div>
+      <div class="comic-note green-note" aria-hidden="true">SOMETHING OF<br><strong>A SCIENTIST.</strong></div>
+      <div class="chapter-number" aria-hidden="true">03<span>/ CONTROLLED CHAOS</span></div>
+    </section>
+    <section class="chapter" id="software" data-chapter="3" aria-labelledby="software-title">
+      <div class="chapter-copy">
+        <div class="eyebrow"><span class="chapter-chip">04</span> DAILY BUGLE / HOT OFF THE PRESS</div>
+        <h2 id="software-title">LESS TALK.<br><span class="red">MORE</span><br><span class="headline-outline">SHIPPING.</span></h2>
+        <p class="intro">From a hand-tracked arcade game to tools that make someone’s day easier. Built to be used.</p>
+        <div class="project-strips">
+          <button data-project="6"><span>01</span><div><strong>PALMSLASH</strong><small>Fruit Ninja. Your hands are the controller.</small></div><b>↗</b></button>
+          <button data-project="2"><span>02</span><div><strong>myHR</strong><small>People operations, without the chaos.</small></div><b>↗</b></button>
+          <button data-project="5"><span>03</span><div><strong>APPLYWISE</strong><small>A private, local-first job application toolkit.</small></div><b>↗</b></button>
+        </div>
+        <button class="text-link" data-open-projects>THERE’S MORE IN THE ARCHIVE <span>↗</span></button>
+      </div>
+      <div class="comic-note" aria-hidden="true">BREAKING NEWS:<br><strong>IT ACTUALLY WORKS.</strong></div>
+      <div class="chapter-number" aria-hidden="true">04<span>/ THE DAILY BUILD</span></div>
+    </section>
+    <section class="chapter" id="experience" data-chapter="4" aria-labelledby="experience-title">
+      <div class="chapter-copy">
+        <div class="eyebrow"><span class="chapter-chip">05</span> BROOKLYN BRIDGE / CONNECTING WORLDS</div>
+        <h2 id="experience-title">BETWEEN<br>HARDWARE <span class="red">&</span><br><span class="red">HUMANS.</span></h2>
+        <p class="intro">The best engineering connects both sides. I work where software, physical systems, and real people meet.</p>
+        <div class="timeline">
+          <a href="archive.html#experience"><span>01</span><div><small>REVAMP · UIUC</small><h3>Software Engineer</h3><p>Review workflows for real medical billing teams.</p></div><b>↗</b></a>
+          <a href="archive.html#experience"><span>02</span><div><small>ILLINOIS EV CONCEPT</small><h3>Embedded Systems</h3><p>STM32 drivers and vehicle telemetry.</p></div><b>↗</b></a>
+          <a href="archive.html#experience"><span>03</span><div><small>ILLINOIS ECE</small><h3>Course Assistant & Grader</h3><p>Helping the next engineer find their footing.</p></div><b>↗</b></a>
+        </div>
+      </div>
+      <div class="comic-note" aria-hidden="true">TAKE THE LEAP.<br><strong>BUILD THE BRIDGE.</strong></div>
+      <div class="chapter-number" aria-hidden="true">05<span>/ NO WAY BUT FORWARD</span></div>
+    </section>
+    <section class="chapter" id="about" data-chapter="5" aria-labelledby="about-title">
+      <div class="chapter-copy">
+        <div class="eyebrow"><span class="chapter-chip">06</span> THE ROOFTOP / UNDER THE MASK</div>
+        <h2 id="about-title">JUST SHIVAM.<br><span class="red">STILL FIGURING</span><br>IT ALL OUT.</h2>
+        <p class="intro">Computer Engineering at UIUC. Semiconductor Engineering minor. I take on things I haven’t done before, go all-in, and don’t stop until they work.</p>
+        <div class="identity-card"><img src="shivam-color.jpg" alt="Shivam Kapadia" loading="lazy"><div><span class="card-kicker">CIVILIAN ID / VERIFIED HUMAN</span><h3>SHIVAM<br>VIPUL KAPADIA</h3><p>Champaign, IL · Class of 2028</p><div class="identity-tags"><span>3.96 GPA</span><span>IEEE-HKN</span><span>JAMES SCHOLAR</span></div></div></div>
+        <p class="personal-note">Off duty: cricket, travel, finance, and conversations with people who see the world differently.</p>
+        <a class="text-link" href="archive.html#about">THE COMPLETE ORIGIN STORY <span>↗</span></a>
+      </div>
+      <div class="comic-note" aria-hidden="true">ANYONE CAN<br><strong>WEAR THE MASK.</strong></div>
+      <div class="chapter-number" aria-hidden="true">06<span>/ THE PERSON INSIDE</span></div>
+    </section>
+    <section class="chapter contact-chapter" id="contact" data-chapter="6" aria-labelledby="contact-title">
+      <div class="chapter-copy">
+        <div class="eyebrow"><span class="chapter-chip">07</span> NEXT CHAPTER / TO BE CONTINUED</div>
+        <h2 id="contact-title">GOT A<br><span class="red">BIG IDEA?</span><br>LET’S SWING.</h2>
+        <p class="intro">Interesting problems. Unreasonable ideas. Something that probably shouldn’t work, but just might. I’m listening.</p>
+        <a class="button primary email-button" href="mailto:svk7@illinois.edu">svk7@illinois.edu <span>↗</span></a>
+        <div class="contact-options"><a href="https://github.com/shivamvkapadia" target="_blank" rel="noopener">GITHUB ↗</a><a href="https://www.linkedin.com/in/shivam-kapadia" target="_blank" rel="noopener">LINKEDIN ↗</a><button data-open-resumes>RÉSUMÉS ↓</button></div>
+        <div class="end-credit"><span class="web-mark">✳</span><p>BUILT BY SHIVAM. POWERED BY CURIOSITY.<br><span>An unofficial Spider-Man-inspired fan portfolio.</span></p></div>
+        <a class="back-top" href="#home">↑ BACK TO THE FIRST PANEL</a>
+      </div>
+      <div class="comic-note" aria-hidden="true">YOUR NEXT<br><strong>GREAT TEAM-UP.</strong></div>
+      <div class="chapter-number" aria-hidden="true">07<span>/ SEE YOU AROUND</span></div>
+    </section>
+  </main>
+  <footer class="journey-bar">
+    <div class="scroll-prompt"><span class="scroll-icon" aria-hidden="true">↓</span><span>SCROLL TO SWING<small>THE CITY IS YOUR PORTFOLIO.</small></span></div>
+    <nav class="route" aria-label="City chapters"><a href="#home" class="active" aria-label="Queens: introduction" aria-current="location"><span></span><small>QUEENS</small></a><a href="#work" aria-label="Midtown: featured project"><span></span><small>MIDTOWN</small></a><a href="#lab" aria-label="Oscorp: hardware and research"><span></span><small>OSCORP</small></a><a href="#software" aria-label="Daily Bugle: software projects"><span></span><small>BUGLE</small></a><a href="#experience" aria-label="Bridge: experience"><span></span><small>BRIDGE</small></a><a href="#about" aria-label="Rooftop: about Shivam"><span></span><small>ROOFTOP</small></a><a href="#contact" aria-label="Next chapter: contact"><span></span><small>WHAT’S NEXT</small></a></nav>
+    <div class="journey-count"><span id="current-chapter">01</span><span class="count-slash">/</span>07</div>
+    <div class="progress-track"><div id="journey-progress"></div></div>
+  </footer>
+  <dialog id="project-dialog" class="portfolio-dialog" aria-labelledby="project-dialog-title"><div class="dialog-top"><span>THE SHIVAM-VERSE / CASE FILES</span><button class="close-dialog" aria-label="Close project window">✕</button></div><div class="dialog-content"><div class="dialog-title-row"><h2 id="project-dialog-title">THE WORK<span>.</span></h2><span id="project-count">11 MISSIONS</span></div><div id="project-filters" class="filters" role="group" aria-label="Filter projects"><button data-filter="all" aria-pressed="true">ALL</button><button data-filter="software" aria-pressed="false">SOFTWARE</button><button data-filter="ai" aria-pressed="false">AI & VISION</button><button data-filter="hardware" aria-pressed="false">HARDWARE</button></div><div id="project-list" class="project-catalog"></div><div id="project-detail" hidden></div></div></dialog>
+  <dialog id="map-dialog" class="portfolio-dialog map-dialog" aria-labelledby="map-title"><div class="dialog-top"><span>PICK YOUR NEXT ROOFTOP</span><button class="close-dialog" aria-label="Close city map">✕</button></div><div class="dialog-content"><h2 id="map-title">YOUR CITY<br>GUIDE<span>.</span></h2><nav class="map-links" aria-label="City destinations"><a href="#home"><span>01 / QUEENS</span>THE ORIGIN STORY ↗</a><a href="#work"><span>02 / MIDTOWN</span>FEATURED WORK ↗</a><a href="#lab"><span>03 / OSCORP</span>HARDWARE & RESEARCH ↗</a><a href="#software"><span>04 / DAILY BUGLE</span>SOFTWARE PROJECTS ↗</a><a href="#experience"><span>05 / BROOKLYN BRIDGE</span>EXPERIENCE ↗</a><a href="#about"><span>06 / THE ROOFTOP</span>ABOUT SHIVAM ↗</a><a href="#contact"><span>07 / WHAT’S NEXT</span>LET’S TALK ↗</a></nav><a class="text-link" href="archive.html">READ THE FULL PORTFOLIO ↗</a></div></dialog>
+  <dialog id="resume-dialog" class="portfolio-dialog resume-dialog" aria-labelledby="resume-title"><div class="dialog-top"><span>CHOOSE YOUR DIMENSION</span><button class="close-dialog" aria-label="Close résumé picker">✕</button></div><div class="dialog-content"><h2 id="resume-title">THE RÉSUMÉS<span>.</span></h2><div class="map-links"><a href="ShivamVipulKapadia_Resume_SWE.pdf" download><span>01 / PDF</span>SOFTWARE ENGINEERING ↓</a><a href="ShivamVipulKapadia_Resume_Embedded.pdf" download><span>02 / PDF</span>EMBEDDED & HARDWARE ↓</a><a href="ShivamVipulKapadia_Resume_Research.pdf" download><span>03 / PDF</span>RESEARCH ↓</a><a href="ShivamVipulKapadia_Resume_Consulting.pdf" download><span>04 / PDF</span>TECH CONSULTING ↓</a></div></div></dialog>
+  <noscript><div class="no-script">The full city experience uses JavaScript. <a href="archive.html">Read the complete portfolio here →</a></div></noscript>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

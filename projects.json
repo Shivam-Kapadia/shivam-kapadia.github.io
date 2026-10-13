@@ -1,0 +1,217 @@
+[
+  {
+    "id": 1,
+    "title": "Meter: Autonomous LLM Spend Control",
+    "kind": "Hackathon · Payments",
+    "date": "Aug 2026",
+    "description": "Owned the payments and treasury workstream on a four-person, three-day build: a drop-in LLM proxy that meters inference spend and tops up provider credits before production runs out of money. Roughly 2,000 lines of Python across seven modules behind 205 automated tests, covering a card-rail integration, an idempotent write-ahead charge path, and an autonomous Treasurer agent that spends against human-approved mandates with nobody awake. Migrated the whole project's ledger from SQLite to hosted Postgres, cutting per-read latency from 201ms to about 50ms, and found that CI had never actually executed a single test, putting 551 checks into operation that had never run once.",
+    "tags": [
+      "Python",
+      "FastAPI",
+      "PostgreSQL",
+      "asyncio",
+      "Payments API"
+    ],
+    "links": [],
+    "category": "ai"
+  },
+  {
+    "id": 2,
+    "title": "myHR: Multi-Tenant HR Platform",
+    "kind": "Software",
+    "date": "Sep 2026",
+    "description": "A people-operations workspace that puts the employee directory, onboarding automation and kanban task boards in one place, with Slack sync. Four roles (Owner, Admin, Manager, Employee) are enforced inside Postgres by 27 Row Level Security policies, so permissions hold even if the interface is bypassed. Adding an employee fires a database trigger that builds their onboarding checklist in the same transaction. AI agents connect through a zero-dependency MCP server with 15 tools, using SHA-256 hashed API keys scoped to a role. The live demo runs fully in the browser on a seeded workspace.",
+    "tags": [
+      "JavaScript",
+      "Supabase",
+      "PostgreSQL",
+      "Row Level Security",
+      "MCP"
+    ],
+    "links": [
+      {
+        "url": "https://shivamvkapadia.github.io/myHR/",
+        "label": "Try the Demo →"
+      },
+      {
+        "url": "https://github.com/shivamvkapadia/myHR",
+        "label": "GitHub →"
+      }
+    ],
+    "category": "software"
+  },
+  {
+    "id": 3,
+    "title": "OrgaNice: Semester Organizer",
+    "kind": "Software",
+    "date": "Oct 2026",
+    "description": "A personal organizer for a college semester: courses, RSOs, prioritized tasks and exams in one place, with a calendar that fills itself from their dates. It is dependency free, with no build step and no backend, and it is responsive and keyboard accessible. Data stays in the browser. A JSON backup can be exported, and importing one validates it and asks before replacing the workspace. Deleting a course or club keeps its tasks and exams by moving them under Personal, so nothing is lost by accident.",
+    "tags": [
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "localStorage"
+    ],
+    "links": [
+      {
+        "url": "https://shivamvkapadia.github.io/OrgaNice/",
+        "label": "Open It →"
+      },
+      {
+        "url": "https://github.com/shivamvkapadia/OrgaNice",
+        "label": "GitHub →"
+      }
+    ],
+    "category": "software"
+  },
+  {
+    "id": 4,
+    "title": "WebToWallStreet",
+    "kind": "Course · Static Site",
+    "date": "Aug 2026",
+    "description": "A self-paced course taking someone from knowing nothing about consulting to holding their own in a case interview, delivered as a field tracker rather than a set of lessons: each study day is a region on a map and each concept is a sighting to log. 40 sections across three days of material, written for a reader who has never heard engagement used as a noun. No framework, no build step, no dependencies. Territories are generated from a seeded wobble, so adding a day is a data-entry task rather than a design task.",
+    "tags": [
+      "JavaScript",
+      "HTML/CSS",
+      "SVG",
+      "GitHub Pages"
+    ],
+    "links": [
+      {
+        "url": "https://shivamvkapadia.github.io/Web2WallSt/",
+        "label": "Open It →"
+      },
+      {
+        "url": "https://github.com/shivamvkapadia/Web2WallSt",
+        "label": "GitHub →"
+      }
+    ],
+    "category": "software"
+  },
+  {
+    "id": 5,
+    "title": "Applywise: Job Application Tracker",
+    "kind": "Full-Stack · AI",
+    "date": "July 2026",
+    "description": "A local-first job tracker built for a single non-technical user running it on their own machine. Kanban pipeline through five stages, plus one-click generation of a full application kit: a cover letter, rewritten resume bullets, five likely interview questions, and a company brief, all grounded in the user's real resume and that job's actual description. Privacy is the design constraint rather than a feature, so data lives in a local SQLite file, there are no accounts, and the API key never leaves the machine. Markdown is stripped twice over, in the prompt and again server-side, because the output gets pasted straight into a real application.",
+    "tags": [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Prisma",
+      "OpenRouter"
+    ],
+    "links": [
+      {
+        "url": "https://github.com/shivamvkapadia/Applywise",
+        "label": "GitHub →"
+      }
+    ],
+    "category": "ai"
+  },
+  {
+    "id": 6,
+    "title": "PalmSlash: Webcam Fruit Ninja",
+    "kind": "Computer Vision",
+    "date": "June 2026",
+    "description": "A Fruit Ninja clone with no mouse and no keyboard, just your hands in the air. MediaPipe tracks both hands and index fingertips become blades. A One-Euro filter running at 60fps smooths and predicts between detection samples throttled to about 22Hz, so tracking stays fluid even though inference runs far below the frame rate. A slice is tested as the segment between a fingertip's last two positions against each fruit's hitbox, gated by a minimum speed so a resting finger doesn't shred the screen. Ships as a single ~1,100-line index.html with no build step.",
+    "tags": [
+      "p5.js",
+      "MediaPipe",
+      "JavaScript",
+      "MIT"
+    ],
+    "links": [
+      {
+        "url": "https://shivamvkapadia.github.io/PalmSlash/",
+        "label": "Play It →"
+      },
+      {
+        "url": "https://github.com/shivamvkapadia/PalmSlash",
+        "label": "GitHub →"
+      }
+    ],
+    "category": "ai"
+  },
+  {
+    "id": 7,
+    "title": "Poker Bot: Discord Texas Hold'em",
+    "kind": "Bot · Async",
+    "date": "July 2026",
+    "description": "Real Texas Hold'em played inside a Discord channel through slash commands and buttons, with hole cards kept private via ephemeral replies. Full betting flow across preflop, flop, turn, river and showdown, with minimum-raise enforcement, side pots computed from per-player committed amounts, and odd-chip remainders distributed one chip at a time. Deliberately split into a Discord-free game engine and a Discord I/O layer, with views rebuilt statelessly from the engine's legal actions on every update.",
+    "tags": [
+      "Python",
+      "discord.py",
+      "asyncio",
+      "treys"
+    ],
+    "links": [
+      {
+        "url": "https://github.com/shivamvkapadia/pokerbot",
+        "label": "GitHub →"
+      }
+    ],
+    "category": "software"
+  },
+  {
+    "id": 8,
+    "title": "Hands-Free Dorm-Friendly Dishwasher",
+    "kind": "Hardware",
+    "date": "Jan — May 2026",
+    "description": "A fully analog, hands-free dishwashing appliance with no microcontroller anywhere in it. A 555 timer based sequential system drives the wash cycle through cascaded stages, counters step through each phase, and LEDs indicate progress. Built for ECE 145 First-Year Design Laboratory under First Year Honors.",
+    "tags": [
+      "555 Timer",
+      "MOSFET",
+      "Analog",
+      "ECE 145"
+    ],
+    "links": [],
+    "category": "hardware"
+  },
+  {
+    "id": 9,
+    "title": "BeatBot: ASME Robotic Drummer",
+    "kind": "Robotics · ASME",
+    "date": "Jan — Apr 2026 · Embedded Systems Engineer",
+    "description": "A two-armed robotic drummer that plays programmed songs. Brushless DC motor driven striking arms, controlled by Arduino-based code that sequences and times each beat. Primary contributor on the ECE team, with additional work on the CAD design.",
+    "tags": [
+      "C/C++",
+      "Embedded",
+      "CAD"
+    ],
+    "links": [],
+    "category": "hardware"
+  },
+  {
+    "id": 10,
+    "title": "School Library Management System",
+    "kind": "Software",
+    "date": "May — Jun 2024",
+    "description": "A Java and SQL system that modernized and automated library operations, including a recommendation algorithm suggesting books from a reader's interests. Deployed and still running, managing 10,000 books for 800 students and faculty. The lesson that stuck came from the librarian, who asked for a manual override of my recommender: my target was the next loan, hers was whether the student was still reading in three years, and nothing in my schema represented that.",
+    "tags": [
+      "Java",
+      "SQL",
+      "Recommender"
+    ],
+    "links": [],
+    "category": "software"
+  },
+  {
+    "id": 11,
+    "title": "eduCode Inc.",
+    "kind": "Venture",
+    "date": "Nov 2021 — Jan 2022",
+    "description": "Co-founded eduCode Inc. at 14 and led development as a Java programmer, building educational tools to make learning more accessible: a Periodic Table Memorization Tool and an Equations of Motion Calculator, both wrapped in an HTML/CSS site.",
+    "tags": [
+      "Java",
+      "HTML/CSS"
+    ],
+    "links": [
+      {
+        "url": "https://sites.google.com/view/educodeinc",
+        "label": "Open Project →"
+      }
+    ],
+    "category": "software"
+  }
+]

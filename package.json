@@ -1,0 +1,19 @@
+{
+  "name": "shivam-spider-city",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "check": "node --check app.js && node --check city.js && node scripts/check.mjs",
+    "test": "node scripts/browser-test.mjs"
+  },
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "@fontsource/barlow-condensed": "^5.3.0",
+    "@fontsource/space-grotesk": "^5.3.0",
+    "playwright": "1.56.1"
+  }
+}

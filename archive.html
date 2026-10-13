@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Shivam Vipul Kapadia — Computer Engineering student at UIUC (Class of 2028). Published ML research, payments infrastructure, analog circuits, and a habit of outworking the problem."/>
+<meta name="author" content="Shivam Vipul Kapadia"/>
+<meta name="theme-color" content="#FFFDF5"/>
+<link rel="canonical" href="https://shivamvkapadia.github.io/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Shivam Vipul Kapadia"/>
+<meta property="og:description" content="Computer Engineering @ UIUC. Published ML research, payments infrastructure, analog circuits."/>
+<meta property="og:url" content="https://shivamvkapadia.github.io/"/>
+<meta property="og:image" content="https://shivamvkapadia.github.io/shivam-lego.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23FF6B6B' stroke='%23000' stroke-width='10'/%3E%3Ctext x='50' y='70' font-family='Arial,sans-serif' font-size='54' font-weight='900' text-anchor='middle' fill='%23000'%3ESK%3C/text%3E%3C/svg%3E"/>
+<title>Shivam Vipul Kapadia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;900&display=block" rel="stylesheet"/>
+<style>
+/* ============================================================
+   DESIGN TOKENS — NEO-BRUTALISM
+   ============================================================ */
+:root{
+  /* colors */
+  --cream:#FFFDF5;
+  --ink:#000000;
+  --accent:#FF6B6B;   /* hot red */
+  --secondary:#FFD93D;/* vivid yellow */
+  --muted:#C4B5FD;    /* soft violet */
+  --white:#FFFFFF;
+
+  /* borders */
+  --b2:2px solid var(--ink);
+  --b4:4px solid var(--ink);
+  --b8:8px solid var(--ink);
+
+  /* hard shadows — zero blur, zero spread */
+  --sh-s:4px 4px 0px 0px #000;
+  --sh-m:8px 8px 0px 0px #000;
+  --sh-l:12px 12px 0px 0px #000;
+  --sh-xl:16px 16px 0px 0px #000;
+  --sh-inv:12px 12px 0px 0px #fff;
+
+  --font:'Space Grotesk', sans-serif;
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:var(--font);
+  font-weight:700;
+  overflow-x:hidden;
+  /* halftone texture — never leave backgrounds flat */
+  background-image:radial-gradient(#000 1.5px, transparent 1.5px);
+  background-size:22px 22px;
+}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--secondary);color:#000}
+img{display:block}
+
+/* ============================================================
+   PRIMITIVES
+   ============================================================ */
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+@media(min-width:768px){ .wrap{padding:0 32px} }
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--font);font-weight:700;font-size:14px;
+  text-transform:uppercase;letter-spacing:.06em;
+  height:56px;padding:0 26px;cursor:pointer;
+  border:var(--b4);border-radius:0;background:var(--white);color:var(--ink);
+  box-shadow:var(--sh-s);
+  transition:transform 100ms linear, box-shadow 100ms linear, background 100ms linear;
+}
+.btn:hover{box-shadow:var(--sh-m)}
+.btn:active{transform:translate(2px,2px);box-shadow:none}
+.btn:focus-visible{outline:none;box-shadow:var(--sh-s),0 0 0 4px var(--muted)}
+.btn-accent{background:var(--accent);color:var(--ink)}
+.btn-yellow{background:var(--secondary)}
+.btn svg{width:18px;height:18px;stroke:currentColor;stroke-width:3;fill:none}
+
+.badge{
+  display:inline-block;font-weight:900;font-size:12px;
+  text-transform:uppercase;letter-spacing:.16em;
+  padding:7px 14px;border:var(--b4);background:var(--secondary);
+  box-shadow:var(--sh-s);
+}
+.badge.red{background:var(--accent)}
+.badge.violet{background:var(--muted)}
+.badge.pill{border-radius:9999px}
+
+.card{
+  background:var(--white);border:var(--b4);border-radius:0;
+  box-shadow:var(--sh-m);
+  transition:transform 200ms ease-out, box-shadow 200ms ease-out;
+}
+.card:hover{transform:translateY(-8px);box-shadow:var(--sh-xl)}
+
+/* section scaffolding */
+.section{padding:80px 0}
+@media(min-width:768px){ .section{padding:120px 0} }
+.sec-label{
+  display:inline-block;font-weight:900;font-size:13px;
+  text-transform:uppercase;letter-spacing:.2em;
+  border:var(--b4);background:var(--ink);color:var(--cream);
+  padding:8px 16px;box-shadow:var(--sh-s);
+  transform:rotate(-2deg);margin-bottom:22px;
+}
+.sec-title{
+  font-weight:900;text-transform:uppercase;letter-spacing:-0.03em;
+  line-height:.85;font-size:clamp(44px,9vw,96px);margin-bottom:44px;
+}
+.sec-title .hollow{
+  -webkit-text-stroke:2px var(--ink);color:transparent;
+}
+
+/* color-blocked sections */
+.block-yellow{background:var(--secondary);border-top:var(--b8);border-bottom:var(--b8)}
+.block-violet{background:var(--muted);border-top:var(--b8);border-bottom:var(--b8)}
+.block-black{background:var(--ink);color:var(--cream);border-top:var(--b8);border-bottom:var(--b8)}
+.block-black .sec-label{background:var(--secondary);color:var(--ink)}
+.block-black .sec-title .hollow{-webkit-text-stroke:2px var(--cream)}
+/* grid texture on color blocks */
+.block-yellow,.block-violet{
+  background-image:
+    linear-gradient(to right, rgba(0,0,0,.09) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,0,0,.09) 1px, transparent 1px);
+  background-size:40px 40px;
+}
+.block-yellow{background-color:var(--secondary)}
+.block-violet{background-color:var(--muted)}
+.block-black{
+  background-image:radial-gradient(rgba(255,255,255,.16) 1.5px, transparent 1.5px);
+  background-size:26px 26px;
+  background-color:var(--ink);
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+header.nav{
+  position:sticky;top:0;z-index:60;
+  background:var(--cream);border-bottom:var(--b4);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:78px}
+.logo{
+  font-weight:900;font-size:20px;text-transform:uppercase;letter-spacing:-.02em;
+  border:var(--b4);background:var(--accent);padding:8px 14px;box-shadow:var(--sh-s);
+  transition:transform 100ms linear, box-shadow 100ms linear;
+}
+.logo:hover{transform:translate(-2px,-2px);box-shadow:var(--sh-m)}
+.nav-links{display:none;gap:6px;align-items:center}
+@media(min-width:1140px){ .nav-links{display:flex} }
+.nav-links a{
+  font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;
+  padding:8px 10px;border:2px solid transparent;
+  transition:all 100ms linear;
+}
+.nav-links a:hover{
+  border:var(--b2);border-color:var(--ink);background:var(--accent);
+  box-shadow:var(--sh-s);
+}
+.nav-cta{display:none}
+@media(min-width:640px){ .nav-cta{display:inline-flex;height:48px;font-size:12px;padding:0 18px} }
+.burger{
+  width:52px;height:52px;border:var(--b4);background:var(--secondary);
+  box-shadow:var(--sh-s);cursor:pointer;
+  display:flex;flex-direction:column;gap:5px;align-items:center;justify-content:center;
+  transition:transform 100ms linear, box-shadow 100ms linear;
+}
+@media(min-width:1140px){ .burger{display:none} }
+.burger:active{transform:translate(2px,2px);box-shadow:none}
+.burger span{width:24px;height:3px;background:var(--ink);transition:transform 150ms ease-out}
+.burger.open span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+
+/* mobile drawer */
+.drawer{
+  position:fixed;inset:78px 0 0 0;z-index:55;background:var(--cream);
+  border-top:var(--b4);padding:24px 20px;display:none;
+  background-image:radial-gradient(#000 1.5px, transparent 1.5px);background-size:22px 22px;
+  overflow-y:auto;
+}
+.drawer.open{display:block}
+@media(min-width:1140px){ .drawer.open{display:none} }
+.drawer a{
+  display:block;font-weight:900;font-size:22px;text-transform:uppercase;
+  border:var(--b4);background:var(--white);box-shadow:var(--sh-s);
+  padding:16px 18px;margin-bottom:12px;
+  transition:transform 100ms linear, background 100ms linear;
+}
+.drawer a:nth-child(odd){background:var(--secondary)}
+.drawer a:nth-child(even){background:var(--muted)}
+.drawer a:active{transform:translate(2px,2px);box-shadow:none}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{position:relative;padding:56px 0 0;overflow:hidden}
+@media(min-width:1024px){ .hero{padding:70px 0 0} }
+.hero-grid{display:grid;grid-template-columns:1fr;gap:36px;align-items:center}
+@media(min-width:1024px){ .hero-grid{grid-template-columns:58% 42%;gap:20px} }
+
+.hero-tag{
+  display:inline-block;font-weight:900;font-size:12px;letter-spacing:.2em;
+  text-transform:uppercase;border:var(--b4);background:var(--muted);
+  padding:8px 14px;box-shadow:var(--sh-s);transform:rotate(-2deg);margin-bottom:26px;
+}
+.hero h1{
+  font-weight:900;text-transform:uppercase;letter-spacing:-0.04em;line-height:.82;
+  font-size:clamp(52px,10.5vw,124px);margin-bottom:26px;
+}
+.hero h1 .l1{display:block}
+.hero h1 .l2{
+  display:inline-block;-webkit-text-stroke:2.5px var(--ink);color:transparent;
+  transform:rotate(-1.5deg);
+}
+.hero-sub{
+  font-weight:700;font-size:clamp(17px,2vw,21px);line-height:1.5;
+  max-width:560px;margin-bottom:30px;
+  border-left:var(--b8);padding-left:18px;
+}
+.hero-sub b{background:var(--secondary);border:var(--b2);padding:1px 6px;box-shadow:2px 2px 0 #000}
+/* four résumé buttons */
+.resume-row{margin-bottom:22px}
+.resume-row .rr-k{display:inline-block;font-weight:900;font-size:12px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:12px;background:var(--ink);color:var(--cream);border:var(--b2);padding:5px 10px}
+.rr-btns{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(min-width:560px){ .rr-btns{display:flex;flex-wrap:wrap} }
+.rr-btns .btn{height:48px;padding:0 16px;font-size:13px}
+.rr-btns .btn:nth-child(1){background:var(--accent)}
+.rr-btns .btn:nth-child(2){background:var(--secondary)}
+.rr-btns .btn:nth-child(3){background:var(--muted)}
+.resume-row.center{margin:26px 0 0}
+.resume-row.center .rr-btns{justify-content:center}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:34px}
+.hero-cta .btn{width:100%}
+@media(min-width:480px){ .hero-cta .btn{width:auto} }
+
+/* stat strip */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:var(--b4);box-shadow:var(--sh-m);background:var(--white)}
+@media(min-width:640px){ .stats{grid-template-columns:repeat(4,1fr)} }
+.stat{padding:16px 12px;text-align:center;border-right:var(--b4);border-bottom:var(--b4)}
+.stat:nth-child(2n){border-right:none}
+.stat:nth-child(n+3){border-bottom:none}
+@media(min-width:640px){
+  .stat{border-bottom:none}
+  .stat:nth-child(2n){border-right:var(--b4)}
+  .stat:last-child{border-right:none}
+}
+.stat .n{display:block;font-weight:900;font-size:26px;line-height:1}
+.stat .k{display:block;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.14em;margin-top:6px}
+.stat:nth-child(1){background:var(--secondary)}
+.stat:nth-child(2){background:var(--accent)}
+.stat:nth-child(3){background:var(--muted)}
+.stat:nth-child(4){background:var(--white)}
+
+/* ---- visual chaos zone: the minifigure ---- */
+.chaos{position:relative;min-height:380px;display:flex;align-items:flex-end;justify-content:center}
+@media(min-width:1024px){ .chaos{min-height:560px} }
+.chaos::before{ /* backing slab */
+  content:"";position:absolute;inset:8% 6% 0 6%;
+  background:var(--accent);border:var(--b4);box-shadow:var(--sh-l);
+  transform:rotate(-3deg);
+}
+.chaos::after{ /* big background initials as texture */
+  content:"SK";position:absolute;left:50%;top:16%;transform:translateX(-50%);
+  font-weight:900;font-size:190px;line-height:1;color:rgba(0,0,0,.10);
+  letter-spacing:-.06em;pointer-events:none;
+}
+.figure-wrap{
+  position:relative;z-index:3;cursor:pointer;
+  width:min(88%,340px);
+  animation:floaty 5s ease-in-out infinite;
+  transform-origin:bottom center;
+}
+.figure-wrap img{width:100%;height:auto;filter:drop-shadow(10px 10px 0px rgba(0,0,0,.85))}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.figure-wrap.pop{animation:popbounce 400ms ease-out}
+@keyframes popbounce{0%{transform:scale(1)}35%{transform:scale(1.05) rotate(-2deg)}65%{transform:scale(.98) rotate(1deg)}100%{transform:scale(1)}}
+
+/* sunglasses easter egg */
+.acc{position:absolute;opacity:0;pointer-events:none;z-index:4;transition:opacity 100ms linear}
+.acc.on{opacity:1}
+.shades{width:32%;left:34%;top:25%;transform:scale(.4);transform-origin:center;
+  transition:opacity 100ms linear, transform 200ms ease-out}
+.acc.shades.on{transform:scale(1)}
+.spark-layer{position:absolute;inset:0;pointer-events:none;z-index:5}
+.spark{position:absolute;font-size:22px;opacity:0;animation:sparkle 800ms ease-out forwards}
+@keyframes sparkle{
+  0%{opacity:0;transform:scale(0) rotate(0)}
+  40%{opacity:1;transform:scale(1.2) rotate(18deg)}
+  100%{opacity:0;transform:scale(.4) translateY(-38px) rotate(50deg)}
+}
+
+/* floating sticker badges around the figure */
+.float-badge{position:absolute;z-index:6;transition:transform 200ms ease-out}
+.float-badge:hover{transform:rotate(12deg) scale(1.06)}
+.fb-1{top:4%;left:-2%;transform:rotate(-8deg)}
+.fb-2{top:30%;right:-4%;transform:rotate(7deg)}
+.fb-3{bottom:12%;left:-4%;transform:rotate(-5deg)}
+@media(max-width:1023px){ .fb-2{right:0} .fb-1{left:0} .fb-3{left:0} }
+.star{position:absolute;z-index:2;animation:spin-slow 10s linear infinite}
+.star svg{width:100%;height:100%;fill:var(--secondary);stroke:var(--ink);stroke-width:2.5}
+.st-1{width:64px;height:64px;top:2%;right:6%}
+.st-2{width:44px;height:44px;bottom:6%;right:14%;animation-duration:14s}
+@keyframes spin-slow{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+/* ============================================================
+   MARQUEE
+   ============================================================ */
+.marquee{
+  border-top:var(--b4);border-bottom:var(--b4);background:var(--ink);
+  color:var(--cream);overflow:hidden;padding:14px 0;
+}
+.marquee-track{display:flex;gap:0;white-space:nowrap;animation:marq 26s linear infinite;width:max-content}
+.marquee span{
+  font-weight:900;font-size:22px;text-transform:uppercase;letter-spacing:.06em;padding:0 22px;
+  display:inline-flex;align-items:center;gap:22px;
+}
+.marquee span::after{content:"★";color:var(--secondary);font-size:18px}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about-grid{display:grid;grid-template-columns:1fr;gap:28px}
+@media(min-width:1024px){ .about-grid{grid-template-columns:60% 40%;gap:32px} }
+.about-copy{
+  background:var(--white);border:var(--b4);box-shadow:var(--sh-l);
+  padding:30px;transform:rotate(-1deg);
+}
+@media(min-width:768px){ .about-copy{padding:40px} }
+.about-copy p{font-weight:700;font-size:clamp(17px,1.6vw,21px);line-height:1.55;margin-bottom:18px}
+.about-copy p:last-child{margin-bottom:0}
+.about-copy .hl{background:var(--accent);border:var(--b2);padding:1px 6px;box-shadow:2px 2px 0 #000}
+.about-copy .hl-y{background:var(--secondary);border:var(--b2);padding:1px 6px;box-shadow:2px 2px 0 #000}
+.facts{background:var(--white);border:var(--b4);box-shadow:var(--sh-l);transform:rotate(1deg)}
+.facts h3{
+  font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:.2em;
+  background:var(--muted);border-bottom:var(--b4);padding:14px 18px;
+}
+.fact{display:flex;justify-content:space-between;gap:14px;padding:14px 18px;border-bottom:var(--b2);font-size:15px}
+.fact:last-child{border-bottom:none}
+.fact .k{font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:12px;opacity:.7}
+.fact .v{font-weight:900;text-align:right;font-size:15px}
+
+/* ============================================================
+   EXPERIENCE
+   ============================================================ */
+.xp{display:grid;gap:26px}
+.xp-item{background:var(--white);border:var(--b4);box-shadow:var(--sh-l);color:var(--ink)}
+.xp-item:nth-child(even){transform:rotate(-.6deg)}
+.xp-item:nth-child(odd){transform:rotate(.5deg)}
+.xp-head{
+  display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:flex-start;
+  padding:20px 22px;border-bottom:var(--b4);background:var(--secondary);
+}
+.xp-role{font-weight:900;font-size:clamp(22px,3vw,32px);text-transform:uppercase;letter-spacing:-.02em;line-height:1}
+.xp-org{font-weight:700;font-size:15px;margin-top:6px;text-transform:uppercase;letter-spacing:.08em}
+.xp-body{padding:22px}
+.xp-body ul{list-style:none;display:grid;gap:14px}
+.xp-body li{position:relative;padding-left:30px;font-weight:500;font-size:17px;line-height:1.55}
+.xp-body li::before{
+  content:"";position:absolute;left:0;top:5px;width:14px;height:14px;
+  background:var(--accent);border:var(--b2);
+}
+.xp-lede{font-weight:500;font-size:17px;line-height:1.55;margin-bottom:18px}
+.xp-lede b{font-weight:900}
+
+/* ============================================================
+   PROJECTS
+   ============================================================ */
+.proj-grid{display:grid;grid-template-columns:1fr;gap:26px}
+@media(min-width:640px){ .proj-grid{grid-template-columns:repeat(2,1fr)} }
+@media(min-width:1024px){ .proj-grid{grid-template-columns:repeat(3,1fr)} }
+.proj{
+  position:relative;background:var(--white);border:var(--b4);box-shadow:var(--sh-m);
+  display:flex;flex-direction:column;padding:24px;
+  transition:transform 200ms ease-out, box-shadow 200ms ease-out;
+}
+.proj:hover{transform:translateY(-8px);box-shadow:var(--sh-xl)}
+.proj:nth-child(3n+1){transform:rotate(-.8deg)}
+.proj:nth-child(3n+1):hover{transform:translateY(-8px) rotate(-.8deg)}
+.proj:nth-child(3n+3){transform:rotate(.8deg)}
+.proj:nth-child(3n+3):hover{transform:translateY(-8px) rotate(.8deg)}
+.proj-kind{
+  align-self:flex-start;font-weight:900;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  border:var(--b2);padding:5px 10px;background:var(--muted);box-shadow:2px 2px 0 #000;margin-bottom:16px;
+}
+.proj-when{font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.1em;opacity:.65;margin-bottom:8px}
+.proj-title{font-weight:900;font-size:23px;text-transform:uppercase;letter-spacing:-.02em;line-height:1.05;margin-bottom:12px}
+.proj-desc{font-weight:500;font-size:16px;line-height:1.55;flex:1}
+.proj-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}
+.tag{
+  font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.08em;
+  border:var(--b2);background:var(--cream);padding:4px 9px;
+}
+.proj-link{
+  margin-top:16px;align-self:flex-start;font-weight:900;font-size:12px;text-transform:uppercase;
+  letter-spacing:.1em;border:var(--b2);background:var(--secondary);padding:8px 12px;box-shadow:2px 2px 0 #000;
+  transition:transform 100ms linear, box-shadow 100ms linear;
+}
+.proj-link:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 #000}
+.proj-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.proj-links .proj-link{margin-top:0}
+/* live project */
+.proj.live{background:var(--ink);color:var(--cream)}
+.proj.live .proj-kind{background:var(--accent);color:var(--ink)}
+.proj.live .tag{background:transparent;color:var(--cream);border-color:var(--cream)}
+.proj.live .proj-when{opacity:.75}
+.live-dot{
+  position:absolute;top:-14px;right:-14px;width:38px;height:38px;border-radius:9999px;
+  background:var(--accent);border:var(--b4);box-shadow:var(--sh-s);
+  display:grid;place-items:center;font-size:16px;animation:pulse 1.4s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
+
+/* ============================================================
+   EDUCATION
+   ============================================================ */
+.edu-grid{display:grid;grid-template-columns:1fr;gap:26px}
+@media(min-width:900px){ .edu-grid{grid-template-columns:1fr 1fr} }
+.edu{background:var(--white);border:var(--b4);box-shadow:var(--sh-l)}
+.edu:first-child{transform:rotate(-.7deg)}
+.edu:last-child{transform:rotate(.7deg)}
+.edu-head{padding:20px 22px;border-bottom:var(--b4);background:var(--accent)}
+.edu:last-child .edu-head{background:var(--muted)}
+.edu-school{font-weight:900;font-size:clamp(22px,2.6vw,30px);text-transform:uppercase;letter-spacing:-.02em;line-height:1}
+.edu-when{font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.12em;margin-top:8px}
+.edu-body{padding:22px;font-weight:500;font-size:16px;line-height:1.6}
+.edu-body b{font-weight:900}
+.edu-body ul{list-style:none;display:grid;gap:9px;margin-top:12px}
+.edu-body li{position:relative;padding-left:24px}
+.edu-body li::before{content:"";position:absolute;left:0;top:6px;width:11px;height:11px;background:var(--secondary);border:var(--b2)}
+
+/* ============================================================
+   COURSEWORK
+   ============================================================ */
+.courses{display:flex;flex-wrap:wrap;gap:14px}
+.course{
+  font-weight:900;font-size:15px;text-transform:uppercase;letter-spacing:.02em;
+  border:var(--b4);background:var(--cream);padding:14px 20px;box-shadow:var(--sh-s);
+  transition:transform 100ms linear, box-shadow 100ms linear, background 100ms linear;
+}
+.course:nth-child(3n+2){background:var(--white)}
+.course:hover{transform:translate(-2px,-2px);box-shadow:var(--sh-m);background:var(--accent)}
+
+/* ============================================================
+   SKILLS
+   ============================================================ */
+.skills-grid{display:grid;grid-template-columns:1fr;gap:24px}
+@media(min-width:700px){ .skills-grid{grid-template-columns:1fr 1fr} }
+@media(min-width:1024px){ .skills-grid{grid-template-columns:repeat(3,1fr)} }
+.skill-card{background:var(--cream);border:var(--b4);box-shadow:var(--sh-m)}
+.skill-card:nth-child(4n+1){transform:rotate(-1deg)}
+.skill-card:nth-child(4n+3){transform:rotate(1deg)}
+.skill-head{
+  font-weight:900;font-size:14px;text-transform:uppercase;letter-spacing:.14em;
+  padding:14px 16px;border-bottom:var(--b4);background:var(--white);
+}
+.skill-card:nth-child(4n+1) .skill-head{background:var(--accent)}
+.skill-card:nth-child(4n+2) .skill-head{background:var(--secondary)}
+.skill-card:nth-child(4n+3) .skill-head{background:var(--muted)}
+.skill-card:nth-child(4n) .skill-head{background:var(--white)}
+.skill-list{display:flex;flex-wrap:wrap;gap:8px;padding:16px}
+.skill{
+  font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.03em;
+  border:var(--b2);background:var(--white);padding:6px 11px;
+  transition:transform 100ms linear, box-shadow 100ms linear;
+}
+.skill:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 #000}
+
+/* ============================================================
+   RESEARCH
+   ============================================================ */
+.research{
+  background:var(--cream);border:var(--b8);box-shadow:var(--sh-xl);
+  display:grid;grid-template-columns:1fr;
+}
+@media(min-width:900px){ .research{grid-template-columns:auto 1fr} }
+.research-side{
+  background:var(--accent);border-bottom:var(--b8);
+  padding:28px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;
+}
+@media(min-width:900px){ .research-side{border-bottom:none;border-right:var(--b8);min-width:220px} }
+.research-side .doi-k{font-weight:900;font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+.research-side .doi-v{font-weight:900;font-size:15px;text-align:center;word-break:break-all;line-height:1.3}
+.research-main{padding:28px}
+@media(min-width:768px){ .research-main{padding:36px} }
+.research-title{font-weight:900;font-size:clamp(24px,3.4vw,40px);text-transform:uppercase;letter-spacing:-.03em;line-height:.95;margin:14px 0 16px}
+.research-main p{font-weight:500;font-size:17px;line-height:1.6;margin-bottom:12px}
+.research-meta{
+  display:inline-block;font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:.1em;
+  border:var(--b2);background:var(--secondary);padding:6px 12px;box-shadow:2px 2px 0 #000;margin-top:6px;
+}
+
+/* ============================================================
+   VOLUNTEERING
+   ============================================================ */
+.vol-grid{display:grid;grid-template-columns:1fr;gap:22px}
+@media(min-width:700px){ .vol-grid{grid-template-columns:1fr 1fr} }
+@media(min-width:1100px){ .vol-grid{grid-template-columns:repeat(3,1fr)} }
+.vol{background:var(--cream);border:var(--b4);box-shadow:var(--sh-m);padding:22px;
+  transition:transform 200ms ease-out, box-shadow 200ms ease-out}
+.vol:hover{transform:translateY(-6px);box-shadow:var(--sh-l)}
+.vol-role{font-weight:900;font-size:20px;text-transform:uppercase;letter-spacing:-.01em;line-height:1.1}
+.vol-org{
+  display:inline-block;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.1em;
+  border:var(--b2);background:var(--secondary);padding:4px 9px;margin:10px 0 4px;
+}
+.vol-when{font-weight:700;font-size:12px;letter-spacing:.06em;opacity:.65;margin-bottom:12px}
+.vol-desc{font-weight:500;font-size:15.5px;line-height:1.55}
+
+/* ============================================================
+   CONTACT / FOOTER
+   ============================================================ */
+.contact-box{
+  background:var(--secondary);border:var(--b8);box-shadow:var(--sh-xl);
+  padding:40px 24px;text-align:center;transform:rotate(-1deg);
+}
+@media(min-width:768px){ .contact-box{padding:64px 40px} }
+.contact-box h2{
+  font-weight:900;text-transform:uppercase;letter-spacing:-.04em;line-height:.85;
+  font-size:clamp(44px,9vw,104px);margin-bottom:26px;
+}
+.mail{
+  display:inline-block;font-weight:900;font-size:clamp(17px,2.4vw,26px);
+  border:var(--b4);background:var(--white);padding:14px 22px;box-shadow:var(--sh-m);
+  transition:transform 100ms linear, box-shadow 100ms linear, background 100ms linear;
+  word-break:break-all;
+}
+.mail:hover{transform:translate(-2px,-2px);box-shadow:var(--sh-l);background:var(--accent)}
+.contact-actions{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:26px}
+
+footer.foot{background:var(--ink);color:var(--cream);border-top:var(--b8);padding:34px 0}
+.foot-inner{display:flex;flex-direction:column;gap:16px;align-items:center;justify-content:space-between;text-align:center}
+@media(min-width:768px){ .foot-inner{flex-direction:row;text-align:left} }
+.foot-inner .c{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.1em}
+.foot-links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.foot-links a{
+  font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:.1em;
+  border:var(--b2);border-color:var(--cream);padding:8px 12px;
+  transition:all 100ms linear;
+}
+.foot-links a:hover{background:var(--secondary);color:var(--ink);border-color:var(--secondary);box-shadow:4px 4px 0 #fff}
+
+/* toast */
+#toast{
+  position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(16px);
+  z-index:200;background:var(--accent);color:var(--ink);
+  font-weight:900;font-size:14px;text-transform:uppercase;letter-spacing:.08em;
+  border:var(--b4);box-shadow:var(--sh-m);padding:14px 22px;
+  opacity:0;pointer-events:none;transition:opacity 150ms linear, transform 150ms linear;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* résumé picker */
+.rmodal{
+  position:fixed;inset:0;z-index:150;display:none;align-items:center;justify-content:center;
+  padding:16px;background:rgba(0,0,0,.6);
+}
+.rmodal.open{display:flex}
+.rmodal-box{
+  background:var(--cream);border:var(--b8);box-shadow:var(--sh-xl);
+  width:min(100%,560px);max-height:calc(100vh - 32px);overflow-y:auto;
+}
+.rmodal-head{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:16px 20px;border-bottom:var(--b4);background:var(--secondary);
+}
+.rmodal-head h2{font-weight:900;font-size:22px;text-transform:uppercase;letter-spacing:-.02em;line-height:1}
+.rmodal-x{
+  flex:none;width:44px;height:44px;border:var(--b4);background:var(--white);box-shadow:var(--sh-s);
+  font-family:var(--font);font-weight:900;font-size:20px;cursor:pointer;
+}
+.rmodal-x:active{transform:translate(2px,2px);box-shadow:none}
+.rmodal-list{display:grid;gap:12px;padding:20px}
+.rpick{
+  display:flex;justify-content:space-between;align-items:center;gap:14px;
+  border:var(--b4);background:var(--white);box-shadow:var(--sh-s);padding:14px 16px;
+  transition:transform 100ms linear, box-shadow 100ms linear, background 100ms linear;
+}
+.rpick:hover{transform:translate(-2px,-2px);box-shadow:var(--sh-m);background:var(--accent)}
+.rpick:focus-visible{outline:none;box-shadow:var(--sh-s),0 0 0 4px var(--muted)}
+.rpick b{display:block;font-weight:900;font-size:17px;text-transform:uppercase;letter-spacing:-.01em}
+.rpick span{display:block;font-weight:500;font-size:14px;line-height:1.4;margin-top:4px}
+.rpick svg{flex:none;width:22px;height:22px;stroke:currentColor;stroke-width:3;fill:none}
+
+/* scroll reveal */
+.rv{opacity:0;transform:translateY(24px);transition:opacity 300ms ease-out, transform 300ms ease-out}
+.rv.in{opacity:1;transform:none}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none !important}
+  .rv{opacity:1;transform:none}
+  .figure-wrap{animation:none}
+}
+
+/* ============================================================
+   COURSEWORK — TERM GROUPING
+   ============================================================ */
+.term{
+  display:inline-block;font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:.18em;
+  border:var(--b4);background:var(--ink);color:var(--cream);
+  padding:7px 14px;box-shadow:var(--sh-s);transform:rotate(-1.5deg);
+  margin:34px 0 16px;
+}
+.sec-title + .term{margin-top:0}
+.term.now{background:var(--accent);color:var(--ink)}
+
+/* ============================================================
+   SKILLS — CARD FOOTNOTE
+   ============================================================ */
+.skill-note{
+  padding:0 16px 16px;font-weight:500;font-size:13px;line-height:1.5;opacity:.75;
+}
+
+/* ============================================================
+   RESEARCH — ROLE BANNER + SECOND PAPER
+   ============================================================ */
+.res-role{
+  background:var(--white);border:var(--b8);box-shadow:var(--sh-xl);
+  padding:24px 26px;margin-bottom:34px;transform:rotate(-.7deg);
+  display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;
+}
+@media(min-width:768px){ .res-role{padding:28px 32px} }
+.res-role-title{
+  font-weight:900;font-size:clamp(24px,3.4vw,38px);text-transform:uppercase;
+  letter-spacing:-.03em;line-height:1;
+}
+.res-role-org{font-weight:900;font-size:15px;margin-top:10px;line-height:1.35}
+.res-role-sub{font-weight:500;font-size:15px;margin-top:6px;line-height:1.4;opacity:.75}
+.research + .research{margin-top:34px}
+.research.review .research-side{background:var(--muted)}
+.research.review{transform:rotate(.4deg)}
+
+/* ============================================================
+   HONORS
+   ============================================================ */
+.hon-grid{display:grid;grid-template-columns:1fr;gap:26px}
+@media(min-width:900px){ .hon-grid{grid-template-columns:1fr 1fr} }
+.hon{background:var(--white);border:var(--b4);box-shadow:var(--sh-l)}
+.hon:first-child{transform:rotate(-.6deg)}
+.hon:last-child{transform:rotate(.6deg)}
+.hon-head{
+  font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:.18em;
+  padding:15px 20px;border-bottom:var(--b4);background:var(--secondary);
+}
+.hon:last-child .hon-head{background:var(--muted)}
+.hon-body{padding:20px 22px}
+.hon-body ul{list-style:none;display:grid;gap:13px}
+.hon-body li{position:relative;padding-left:26px;font-weight:500;font-size:16px;line-height:1.5}
+.hon-body li::before{content:"";position:absolute;left:0;top:6px;width:12px;height:12px;background:var(--accent);border:var(--b2)}
+.hon:last-child .hon-body li::before{background:var(--secondary)}
+.hon-body li b{font-weight:900}
+.hon-body li .sc{font-weight:900;font-size:12px;letter-spacing:.06em;opacity:.7}
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="logo">SK.</a>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#research">Research</a>
+      <a href="#honors">Honors</a>
+      <a href="#volunteering">Volunteering</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div style="display:flex;gap:12px;align-items:center">
+      <button class="btn btn-accent nav-cta" id="nav-resume">
+        Résumés
+        <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="drawer" id="drawer">
+  <a href="#about">About</a>
+  <a href="#projects">Projects</a>
+  <a href="#education">Education</a>
+  <a href="#experience">Experience</a>
+  <a href="#skills">Skills</a>
+  <a href="#research">Research</a>
+  <a href="#honors">Honors</a>
+  <a href="#volunteering">Volunteering</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- ================= HERO ================= -->
+<main class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="hero-tag">Computer Engineer · UIUC · Class of 2028</span>
+      <h1>
+        <span class="l1">SHIVAM</span>
+        <span class="l2">KAPADIA</span>
+      </h1>
+      <p class="hero-sub">
+        I <b>outwork the problem</b>. I take on things I haven't done before, go all-in, and don't stop until they work — however many hours it takes.
+      </p>
+      <div class="resume-row">
+        <span class="rr-k">Download Résumé</span>
+        <div class="rr-btns">
+          <a class="btn" href="ShivamVipulKapadia_Resume_SWE.pdf" download="Shivam Vipul Kapadia SWE.pdf">SWE <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="btn" href="ShivamVipulKapadia_Resume_Embedded.pdf" download="Shivam Vipul Kapadia EE Embedded.pdf">Embedded <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="btn" href="ShivamVipulKapadia_Resume_Research.pdf" download="Shivam Vipul Kapadia Research.pdf">Research <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="btn" href="ShivamVipulKapadia_Resume_Consulting.pdf" download="Shivam Vipul Kapadia Tech Consulting.pdf">Consulting <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+      <div class="hero-cta">
+        <a class="btn btn-yellow" href="#projects">
+          See the Work
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="stats">
+        <div class="stat"><span class="n">3.96</span><span class="k">GPA</span></div>
+        <div class="stat"><span class="n">2</span><span class="k">Research Papers</span></div>
+        <div class="stat"><span class="n">11</span><span class="k">Projects Built</span></div>
+        <div class="stat"><span class="n">7</span><span class="k">Volunteer Roles</span></div>
+      </div>
+    </div>
+
+    <!-- visual chaos zone -->
+    <div class="chaos">
+      <div class="star st-1"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8-6.1-3.4-6.1 3.4 1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+      <div class="star st-2"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8-6.1-3.4-6.1 3.4 1.4-6.8L2.2 9.1l6.9-.8z"/></svg></div>
+
+      <span class="badge float-badge fb-1">James Scholar</span>
+      <span class="badge red float-badge fb-2">IEEE-HKN</span>
+      <span class="badge violet float-badge fb-3">Champaign, IL</span>
+
+      <div class="figure-wrap" id="figure-wrap" title="…">
+        <img src="shivam-lego.png" alt="Shivam as a LEGO minifigure"/>
+        <svg class="acc shades" id="shades" viewBox="0 0 120 44" fill="none">
+          <path d="M4 8 H54 Q57 8 56 14 L52 32 Q50 40 40 40 L20 40 Q10 40 8 30 L4 12 Q3 8 4 8 Z" fill="#000" stroke="#000" stroke-width="3"/>
+          <path d="M116 8 H66 Q63 8 64 14 L68 32 Q70 40 80 40 L100 40 Q110 40 112 30 L116 12 Q117 8 116 8 Z" fill="#000" stroke="#000" stroke-width="3"/>
+          <rect x="54" y="12" width="12" height="5" rx="0" fill="#000"/>
+          <path d="M8 12 L52 12" stroke="#FF6B6B" stroke-width="2.5"/>
+          <path d="M68 12 L112 12" stroke="#FF6B6B" stroke-width="2.5"/>
+        </svg>
+        <div class="spark-layer" id="spark-layer"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ================= MARQUEE ================= -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marquee-track">
+    <span>Computer Engineering</span><span>Published Research</span><span>Payments Infrastructure</span>
+    <span>Analog Circuits</span><span>Python · C/C++ · Java</span><span>IEEE-HKN</span><span>Outwork The Problem</span>
+    <span>Computer Engineering</span><span>Published Research</span><span>Payments Infrastructure</span>
+    <span>Analog Circuits</span><span>Python · C/C++ · Java</span><span>IEEE-HKN</span><span>Outwork The Problem</span>
+  </div>
+</div>
+
+<!-- ================= ABOUT ================= -->
+<section class="section" id="about">
+  <div class="wrap">
+    <span class="sec-label rv">01 / About</span>
+    <h2 class="sec-title rv">WHO'S <span class="hollow">BEHIND THIS</span></h2>
+    <div class="about-grid">
+      <div class="about-copy rv">
+        <p>I'm a Computer Engineering student at UIUC who <span class="hl">outworks the problem</span>. I take on things I haven't done before, go all-in, and don't stop until they work.</p>
+        <p>That has meant a <span class="hl-y">fully analog dishwasher</span> with no microcontroller in it, a published comparative analysis of machine learning models for air quality prediction, and a payments subsystem that lets an autonomous agent spend real money safely at 3am. I chase hard problems across hardware and software, and I like the ones where being wrong has a cost.</p>
+        <p>Now a sophomore, teaching two ECE courses, and a member of <span class="hl">IEEE-HKN</span>, the ECE honor society. Outside the lab: cricket, travel, and a deep interest in finance and economics. When I land somewhere new I mostly just talk to people about what it is actually like to live there.</p>
+      </div>
+      <div class="facts rv">
+        <h3>The Facts</h3>
+        <div class="fact"><span class="k">School</span><span class="v">UIUC · Grainger</span></div>
+        <div class="fact"><span class="k">Major</span><span class="v">Computer Engineering</span></div>
+        <div class="fact"><span class="k">Minor</span><span class="v">Semiconductor Engineering</span></div>
+        <div class="fact"><span class="k">GPA</span><span class="v">3.96 / 4.00</span></div>
+        <div class="fact"><span class="k">Grad</span><span class="v">Dec 2028</span></div>
+        <div class="fact"><span class="k">Honor Society</span><span class="v">IEEE-HKN</span></div>
+        <div class="fact"><span class="k">Based In</span><span class="v">Champaign, IL</span></div>
+        <div class="fact"><span class="k">Languages</span><span class="v">EN · HI · GU</span></div>
+        <div class="fact"><span class="k">Interests</span><span class="v">Cricket · Travel · Finance</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROJECTS ================= -->
+<section class="section" id="projects">
+  <div class="wrap">
+    <span class="sec-label rv">02 / Projects</span>
+    <h2 class="sec-title rv">THINGS I <span class="hollow">BUILT</span></h2>
+    <div class="proj-grid">
+
+      <article class="proj live rv">
+        <span class="live-dot">💳</span>
+        <span class="proj-kind">Hackathon · Payments</span>
+        <div class="proj-when">Aug 2026</div>
+        <h3 class="proj-title">Meter: Autonomous LLM Spend Control</h3>
+        <p class="proj-desc">Owned the payments and treasury workstream on a four-person, three-day build: a drop-in LLM proxy that meters inference spend and tops up provider credits before production runs out of money. Roughly 2,000 lines of Python across seven modules behind 205 automated tests, covering a card-rail integration, an idempotent write-ahead charge path, and an autonomous Treasurer agent that spends against human-approved mandates with nobody awake. Migrated the whole project's ledger from SQLite to hosted Postgres, cutting per-read latency from 201ms to about 50ms, and found that CI had never actually executed a single test, putting 551 checks into operation that had never run once.</p>
+        <div class="proj-tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">PostgreSQL</span><span class="tag">asyncio</span><span class="tag">Payments API</span></div>
+      </article>
+
+      <article class="proj rv">
+        <span class="proj-kind">Software</span>
+        <div class="proj-when">Sep 2026</div>
+        <h3 class="proj-title">myHR: Multi-Tenant HR Platform</h3>
+        <p class="proj-desc">A people-operations workspace that puts the employee directory, onboarding automation and kanban task boards in one place, with Slack sync. Four roles (Owner, Admin, Manager, Employee) are enforced inside Postgres by 27 Row Level Security policies, so permissions hold even if the interface is bypassed. Adding an employee fires a database trigger that builds their onboarding checklist in the same transaction. AI agents connect through a zero-dependency MCP server with 15 tools, using SHA-256 hashed API keys scoped to a role. The live demo runs fully in the browser on a seeded workspace.</p>
+        <div class="proj-tags"><span class="tag">JavaScript</span><span class="tag">Supabase</span><span class="tag">PostgreSQL</span><span class="tag">Row Level Security</span><span class="tag">MCP</span></div>
+        <div class="proj-links">
+          <a class="proj-link" href="https://shivamvkapadia.github.io/myHR/" target="_blank" rel="noopener">Try the Demo →</a>
+          <a class="proj-link" href="https://github.com/shivamvkapadia/myHR" target="_blank" rel="noopener">GitHub →</a>
+        </div>
+      </article>
+
+      <article class="proj rv">
+        <span class="proj-kind">Software</span>
+        <div class="proj-when">Oct 2026</div>
+        <h3 class="proj-title">OrgaNice: Semester Organizer</h3>
+        <p class="proj-desc">A personal organizer for a college semester: courses, RSOs, prioritized tasks and exams in one place, with a calendar that fills itself from their dates. It is dependency free, with no build step and no backend, and it is responsive and keyboard accessible. Data stays in the browser. A JSON backup can be exported, and importing one validates it and asks before replacing the workspace. Deleting a course or club keeps its tasks and exams by moving them under Personal, so nothing is lost by accident.</p>
+        <div class="proj-tags"><span class="tag">JavaScript</span><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">localStorage</span></div>
+        <div class="proj-links">
+          <a class="proj-link" href="https://shivamvkapadia.github.io/OrgaNice/" target="_blank" rel="noopener">Open It →</a>
+          <a class="proj-link" href="https://github.com/shivamvkapadia/OrgaNice" target="_blank" rel="noopener">GitHub →</a>
+        </div>
+      </article>
+
+      <article class="proj rv">
+        <span class="proj-kind">Course · Static Site</span>
+        <div class="proj-when">Aug 2026</div>
+        <h3 class="proj-title">WebToWallStreet</h3>
+        <p class="proj-desc">A self-paced course taking someone from knowing nothing about consulting to holding their own in a case interview, delivered as a field tracker rather than a set of lessons: each study day is a region on a map and each concept is a sighting to log. 40 sections across three days of material, written for a reader who has never heard <i>engagement</i> used as a noun. No framework, no build step, no dependencies. Territories are generated from a seeded wobble, so adding a day is a data-entry task rather than a design task.</p>
+        <div class="proj-tags"><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span><span class="tag">SVG</span><span class="tag">GitHub Pages</span></div>
+        <div class="proj-links">
+          <a class="proj-link" href="https://shivamvkapadia.github.io/Web2WallSt/" target="_blank" rel="noopener">Open It →</a>
+          <a class="proj-link" href="https://github.com/shivamvkapadia/Web2WallSt" target="_blank" rel="noopener">GitHub →</a>
+        </div>
+      </article>
+
+      <article class="proj rv">
+        <span class="proj-kind">Full-Stack · AI</span>
+        <div class="proj-when">July 2026</div>
+        <h3 class="proj-title">Applywise: Job Application Tracker</h3>
+        <p class="proj-desc">A local-first job tracker built for a single non-technical user running it on their own machine. Kanban pipeline through five stages, plus one-click generation of a full application kit: a cover letter, rewritten resume bullets, five likely interview questions, and a company brief, all grounded in the user's real resume and that job's actual description. Privacy is the design constraint rather than a feature, so data lives in a local SQLite file, there are no accounts, and the API key never leaves the machine. Markdown is stripped twice over, in the prompt and again server-side, because the output gets pasted straight into a real application.</p>
+        <div class="proj-tags"><span class="tag">Next.js 16</span><span class="tag">React 19</span><span class="tag">TypeScript</span><span class="tag">Prisma</span><span class="tag">OpenRouter</span></div>
+        <a class="proj-link" href="https://github.com/shivamvkapadia/Applywise" target="_blank" rel="noopener">GitHub →</a>
+      </article>
+
+      <article class="proj rv">
+        <span class="proj-kind">Computer Vision</span>
+        <div class="proj-when">June 2026</div>
+        <h3 class="proj-title">PalmSlash: Webcam Fruit Ninja</h3>
+        <p class="proj-desc">A Fruit Ninja clone with no mouse and no keyboard, just your hands in the air. MediaPipe tracks both hands and index fingertips become blades. A One-Euro filter running at 60fps smooths and predicts between detection samples throttled to about 22Hz, so tracking stays fluid even though inference runs far below the frame rate. A slice is tested as the segment between a fingertip's last two positions against each fruit's hitbox, gated by a minimum speed so a resting finger doesn't shred the screen. Ships as a single ~1,100-line index.html with no build step.</p>
+        <div class="proj-tags"><span class="tag">p5.js</span><span class="tag">MediaPipe</span><span class="tag">JavaScript</span><span class="tag">MIT</span></div>
+        <div class="proj-links">
+          <a class="proj-link" href="https://shivamvkapadia.github.io/PalmSlash/" target="_blank" rel="noopener">Play It →</a>
+          <a class="proj-link" href="https://github.com/shivamvkapadia/PalmSlash" target="_blank" rel="noopener">GitHub →</a>
+        </div>
+      </article>
+
+      <article class="proj rv">
+        <span class="proj-kind">Bot · Async</span>
+        <div class="proj-when">July 2026</div>
+        <h3 class="proj-title">Poker Bot: Discord Texas Hold'em</h3>
+        <p class="proj-desc">Real Texas Hold'em played inside a Discord channel through slash commands and buttons, with hole cards kept private via ephemeral replies. Full betting flow across preflop, flop, turn, river and showdown, with minimum-raise enforcement, side pots computed from per-player committed amounts, and odd-chip remainders distributed one chip at a time. Deliberately split into a Discord-free game engine and a Discord I/O layer, with views rebuilt statelessly from the engine's legal actions on every update.</p>
+        <div class="proj-tags"><span class="tag">Python</span><span class="tag">discord.py</span><span class="tag">asyncio</span><span class="tag">treys</span></div>
+        <a class="proj-link" href="https://github.com/shivamvkapadia/pokerbot" target="_blank" rel="noopener">GitHub →</a>
+      </article>
+
+      <article class="proj rv">
+        <span class="proj-kind">Hardware</span>
+        <div class="proj-when">Jan — May 2026</div>
+        <h3 class="proj-title">Hands-Free Dorm-Friendly Dishwasher</h3>
+        <p class="proj-desc">A fully analog, hands-free dishwashing appliance with no microcontroller anywhere in it. A 555 timer based sequential system drives the wash cycle through cascaded stages, counters step through each phase, and LEDs indicate progress. Built for ECE 145 First-Year Design Laboratory under First Year Honors.</p>
+        <div class="proj-tags"><span class="tag">555 Timer</span><span class="tag">MOSFET</span><span class="tag">Analog</span><span class="tag">ECE 145</span></div>
+      </article>
+
+      <article class="proj rv">
+        <span class="proj-kind">Robotics · ASME</span>
+        <div class="proj-when">Jan — Apr 2026 · Embedded Systems Engineer</div>
+        <h3 class="proj-title">BeatBot: ASME Robotic Drummer</h3>
+        <p class="proj-desc">A two-armed robotic drummer that plays programmed songs. Brushless DC motor driven striking arms, controlled by Arduino-based code that sequences and times each beat. Primary contributor on the ECE team, with additional work on the CAD design.</p>
+        <div class="proj-tags"><span class="tag">C/C++</span><span class="tag">Embedded</span><span class="tag">CAD</span></div>
+      </article>
+
+      <article class="proj rv">
+        <span class="proj-kind">Software</span>
+        <div class="proj-when">May — Jun 2024</div>
+        <h3 class="proj-title">School Library Management System</h3>
+        <p class="proj-desc">A Java and SQL system that modernized and automated library operations, including a recommendation algorithm suggesting books from a reader's interests. Deployed and still running, managing 10,000 books for 800 students and faculty. The lesson that stuck came from the librarian, who asked for a manual override of my recommender: my target was the next loan, hers was whether the student was still reading in three years, and nothing in my schema represented that.</p>
+        <div class="proj-tags"><span class="tag">Java</span><span class="tag">SQL</span><span class="tag">Recommender</span></div>
+      </article>
+
+      <article class="proj rv">
+        <span class="proj-kind">Venture</span>
+        <div class="proj-when">Nov 2021 — Jan 2022</div>
+        <h3 class="proj-title">eduCode Inc.</h3>
+        <p class="proj-desc">Co-founded eduCode Inc. at 14 and led development as a Java programmer, building educational tools to make learning more accessible: a Periodic Table Memorization Tool and an Equations of Motion Calculator, both wrapped in an HTML/CSS site.</p>
+        <div class="proj-tags"><span class="tag">Java</span><span class="tag">HTML/CSS</span></div>
+        <a class="proj-link" href="https://sites.google.com/view/educodeinc" target="_blank" rel="noopener">Open Project →</a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= EDUCATION ================= -->
+<section class="section block-violet" id="education">
+  <div class="wrap">
+    <span class="sec-label rv">03 / Education</span>
+    <h2 class="sec-title rv">THE <span class="hollow">SCHOOLING</span></h2>
+    <div class="edu-grid">
+      <article class="edu rv">
+        <div class="edu-head">
+          <div class="edu-school">UIUC</div>
+          <div class="edu-when">Aug 2025 to Dec 2028</div>
+        </div>
+        <div class="edu-body">
+          <b>B.S. Computer Engineering · Minor in Semiconductor Engineering</b>
+          <ul>
+            <li>GPA 3.96 / 4.00 across 42 graded hours</li>
+            <li>James Scholar, 2025-26</li>
+            <li>Dean's List, Fall 2025 and Spring 2026</li>
+            <li>Member, IEEE-HKN — the ECE honor society</li>
+            <li>Grainger Engineering Achievement Scholarship</li>
+            <li>A.R. "Buck" Knight Scholarship</li>
+            <li>ECESAC Academic Committee Member</li>
+          </ul>
+        </div>
+      </article>
+      <article class="edu rv">
+        <div class="edu-head">
+          <div class="edu-school">Atul Vidyalaya</div>
+          <div class="edu-when">ICSE &amp; ISC · Graduated May 2025</div>
+        </div>
+        <div class="edu-body">
+          <b>ISC Grade 12 — 98.2% · ICSE Grade 10 — 98.2%</b>
+          <ul>
+            <li>House Captain, elected (2024–25) and Vice House Captain (2023–24)</li>
+            <li>Head, School Editorial Council (2023–24)</li>
+            <li>Hosted AVMUN 2024 · Best Delegate, AVMUN 2021</li>
+            <li>Second Prize, Frank Anthony Debate, Stage 1</li>
+            <li>100/100 in Computer Science, two consecutive years</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXPERIENCE ================= -->
+<section class="section block-black" id="experience">
+  <div class="wrap">
+    <span class="sec-label rv">04 / Experience</span>
+    <h2 class="sec-title rv">WHERE I'VE <span class="hollow">WORKED</span></h2>
+    <div class="xp">
+
+      <article class="xp-item rv">
+        <div class="xp-head">
+          <div>
+            <div class="xp-role">Software Engineer</div>
+            <div class="xp-org">Revamp, Agentic AI Consulting at UIUC</div>
+          </div>
+          <span class="badge red">Sep 2026 to Present</span>
+        </div>
+        <div class="xp-body">
+          <p class="xp-lede">Revamp is a student consulting group at UIUC that builds software for real companies. I own the review workflow on <b>Clearline</b>, a desktop tool for a medical billing client. One person there handles billing for three imaging companies, and a weekly batch of about 100 scanned pages takes 6 to 9 hours by hand. Clearline extracts the patient information, lets a reviewer check and correct it, and produces spreadsheets and Medicare eligibility worklists.</p>
+          <ul>
+            <li>Designed corrections as an overlay: reviewer edits are stored separately, so the extracted values, OCR confidence and source page references are never overwritten. This honors the client's rule to preserve values as written.</li>
+            <li>Built all-or-nothing validation across 16 schema-derived fields in FastAPI, so a bad input never leaves a record half saved, and a rejected form comes back with everything the reviewer typed still in it.</li>
+            <li>Engineered atomic local saves (write to a temp file, then replace) that restore progress on reopen, so a crash never loses a reviewer's work.</li>
+            <li>Delivered the approval flow, where editing an approved record requires re-approval, plus source PDF preview and color-coded OCR confidence.</li>
+            <li>Wrote 59 tests, including XSS payloads, with CI green on Ubuntu and Windows. Worked through two rounds of code review on a team of about six.</li>
+          </ul>
+          <div class="proj-tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Jinja</span><span class="tag">pytest</span><span class="tag">GitHub Actions</span></div>
+        </div>
+      </article>
+
+      <article class="xp-item rv">
+        <div class="xp-head">
+          <div>
+            <div class="xp-role">Embedded Systems Member</div>
+            <div class="xp-org">Illinois EV Concept</div>
+          </div>
+          <span class="badge violet">Sep 2026 to Present</span>
+        </div>
+        <div class="xp-body">
+          <p class="xp-lede">A student team building an electric vehicle. The embedded group is adding a wireless telemetry link that streams data off the car.</p>
+          <ul>
+            <li>Writing an Embedded C driver that connects an STM32WL radio chip to the car's other boards.</li>
+            <li>Planning an SPI-to-CAN bridge on an MCP2515, since the STM32WL has no CAN peripheral of its own to read the car's bus.</li>
+            <li>Comparing antenna options for the telemetry radio and range testing the link.</li>
+          </ul>
+          <div class="proj-tags"><span class="tag">Embedded C</span><span class="tag">STM32</span><span class="tag">SPI</span><span class="tag">CAN</span><span class="tag">Telemetry</span></div>
+        </div>
+      </article>
+
+      <article class="xp-item rv">
+        <div class="xp-head">
+          <div>
+            <div class="xp-role">Course Assistant &amp; Grader</div>
+            <div class="xp-org">ECE 110 Introduction to Electronics · Illinois ECE</div>
+          </div>
+          <span class="badge">Aug 2026 — Present</span>
+        </div>
+        <div class="xp-body">
+          <ul>
+            <li>Hold office hours, working with students one at a time on whatever they are actually stuck on.</li>
+            <li>Grade submissions for the course, which I completed with an A+ in Spring 2026.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="xp-item rv">
+        <div class="xp-head">
+          <div>
+            <div class="xp-role">Grader</div>
+            <div class="xp-org">ECE 120 Introduction to Computing · Illinois ECE</div>
+          </div>
+          <span class="badge red">Aug 2026 — Present</span>
+        </div>
+        <div class="xp-body">
+          <ul>
+            <li>Grade coursework for the department's introductory computing course, covering LC-3 assembly and C. Completed it with an A+ in Fall 2025.</li>
+            <li>The two teaching appointments together run about 10 hours a week.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="xp-item rv">
+        <div class="xp-head">
+          <div>
+            <div class="xp-role">Front Desk Representative</div>
+            <div class="xp-org">Illinois ECE</div>
+          </div>
+          <span class="badge violet">Feb 2026 — May 2026</span>
+        </div>
+        <div class="xp-body">
+          <ul>
+            <li>Served as first point of contact for students, faculty, and visitors to the ECE department, handling high visitor volume.</li>
+            <li>Routed inquiries to the appropriate advisors and staff, reducing wait times and improving communication flow.</li>
+            <li>Students arrive holding their own problem, like needing to switch a lab section or a transfer credit that posted wrong, while the department is organized by function. Absorbing that mismatch was most of what the job actually was.</li>
+            <li>Managed front desk operations independently, maintaining organized workflows and day-to-day efficiency.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="xp-item rv">
+        <div class="xp-head">
+          <div>
+            <div class="xp-role">Software Engineering Intern</div>
+            <div class="xp-org">1Rivet · Valsad, India</div>
+          </div>
+          <span class="badge red">May 2024</span>
+        </div>
+        <div class="xp-body">
+          <ul>
+            <li>Attended eight expert-led sessions across IT fields, gaining exposure to database administration, web development, and website design.</li>
+            <li>Gained database administration experience through data backup, recovery, and purging, maintaining data integrity and reliability.</li>
+            <li>Built and refined the user interface for a manufacturing company's web platform using HTML and CSS.</li>
+            <li>Implemented SQL queries and algorithms to store and retrieve company data accurately and efficiently.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="xp-item rv">
+        <div class="xp-head">
+          <div>
+            <div class="xp-role">Data Analysis Intern</div>
+            <div class="xp-org">ValU Wealth Care · Valsad, India</div>
+          </div>
+          <span class="badge violet">Dec 2023 — Feb 2024</span>
+        </div>
+        <div class="xp-body">
+          <ul>
+            <li>Developed an understanding of stock market analysis, particularly diversification across small-, mid-, and large-cap companies, and formulating investment strategies for clients of varying income levels.</li>
+            <li>Built Tableau visualizations analyzing financial data and trends for penny stocks in the iron and steel industry, including Supreme Engineering Ltd., Hilton Metal Forging, and SAL Steel, assessing future growth potential from multi-year performance data.</li>
+            <li>Delivered analysis supporting the firm's strategic investment decisions and client outcomes.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="xp-item rv">
+        <div class="xp-head">
+          <div>
+            <div class="xp-role">Academic Mentor</div>
+            <div class="xp-org">Atul Vidyalaya · India</div>
+          </div>
+          <span class="badge">Oct 2023 — Oct 2024</span>
+        </div>
+        <div class="xp-body">
+          <ul>
+            <li>Tutored 50+ peers and junior students in Physics, Mathematics, Chemistry, and Computer Science, and advised on study strategies and exam preparation.</li>
+            <li>Served as School Tour Assistant, guiding prospective students and parents and directing them to the appropriate departments and administrative offices.</li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= COURSEWORK ================= -->
+<section class="section" id="coursework">
+  <div class="wrap">
+    <span class="sec-label rv">05 / Coursework</span>
+    <h2 class="sec-title rv">WHAT I'VE <span class="hollow">STUDIED</span></h2>
+
+    <span class="term now rv">Fall 2026 · In Progress</span>
+    <div class="courses rv">
+      <span class="course">CS 225 · Data Structures</span>
+      <span class="course">ECE 210 · Analog Signal Processing</span>
+      <span class="course">MATH 257 · Linear Algebra</span>
+      <span class="course">ANTH 103 · Anthro in a Changing World</span>
+      <span class="course">HK 271 · Health Equity in the U.S.</span>
+    </div>
+
+    <span class="term rv">Completed</span>
+    <div class="courses rv">
+      <span class="course">ECE 120 · Intro to Computing</span>
+      <span class="course">ECE 220 · Computer Systems &amp; Programming</span>
+      <span class="course">ECE 110 · Intro to Electronics</span>
+      <span class="course">ECE 145 · First-Year Design Lab</span>
+      <span class="course">MATH 241 · Calculus III</span>
+      <span class="course">MATH 285 · Differential Equations</span>
+      <span class="course">MATH 213 · Discrete Mathematics</span>
+      <span class="course">PHYS 211 · Mechanics</span>
+      <span class="course">PHYS 212 · Electricity &amp; Magnetism</span>
+      <span class="course">RHET 105 · Writing &amp; Research</span>
+      <span class="course">HK 208 · Medical Ethics</span>
+      <span class="course">GGIS 204 · Cities of the World</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section class="section block-violet" id="skills">
+  <div class="wrap">
+    <span class="sec-label rv">06 / Skills</span>
+    <h2 class="sec-title rv">THE <span class="hollow">TOOLKIT</span></h2>
+    <div class="skills-grid">
+      <div class="skill-card rv">
+        <div class="skill-head">Languages</div>
+        <div class="skill-list">
+          <span class="skill">Python</span>
+          <span class="skill">C / C++</span>
+          <span class="skill">Java</span>
+          <span class="skill">SQL</span>
+          <span class="skill">JavaScript</span>
+          <span class="skill">TypeScript</span>
+          <span class="skill">HTML / CSS</span>
+          <span class="skill">LC-3 Assembly</span>
+        </div>
+      </div>
+      <div class="skill-card rv">
+        <div class="skill-head">Backend &amp; Data Layer</div>
+        <div class="skill-list">
+          <span class="skill">FastAPI</span>
+          <span class="skill">PostgreSQL</span>
+          <span class="skill">psycopg 3</span>
+          <span class="skill">SQLite</span>
+          <span class="skill">Prisma</span>
+          <span class="skill">asyncio</span>
+          <span class="skill">REST APIs</span>
+          <span class="skill">Schema Design</span>
+          <span class="skill">Connection Pooling</span>
+          <span class="skill">Supabase</span>
+          <span class="skill">Row Level Security</span>
+          <span class="skill">Model Context Protocol (MCP)</span>
+          <span class="skill">Jinja</span>
+          <span class="skill">pytest</span>
+        </div>
+      </div>
+      <div class="skill-card rv">
+        <div class="skill-head">Web &amp; Frontend</div>
+        <div class="skill-list">
+          <span class="skill">Next.js</span>
+          <span class="skill">React</span>
+          <span class="skill">Tailwind CSS</span>
+          <span class="skill">p5.js</span>
+          <span class="skill">MediaPipe</span>
+          <span class="skill">discord.py</span>
+        </div>
+      </div>
+      <div class="skill-card rv">
+        <div class="skill-head">Tooling &amp; Infra</div>
+        <div class="skill-list">
+          <span class="skill">Git / GitHub</span>
+          <span class="skill">GitHub Actions</span>
+          <span class="skill">Docker Compose</span>
+          <span class="skill">ruff</span>
+          <span class="skill">Bash</span>
+          <span class="skill">PowerShell</span>
+          <span class="skill">Adobe Animate</span>
+        </div>
+      </div>
+      <div class="skill-card rv">
+        <div class="skill-head">Hardware</div>
+        <div class="skill-list">
+          <span class="skill">Analog Circuits</span>
+          <span class="skill">555 Timer</span>
+          <span class="skill">MOSFETs</span>
+          <span class="skill">Arduino</span>
+          <span class="skill">KiCAD</span>
+          <span class="skill">Vivado</span>
+          <span class="skill">AutoCAD</span>
+        </div>
+      </div>
+      <div class="skill-card rv">
+        <div class="skill-head">Embedded</div>
+        <div class="skill-list">
+          <span class="skill">Embedded C</span>
+          <span class="skill">STM32</span>
+          <span class="skill">SPI</span>
+          <span class="skill">CAN</span>
+          <span class="skill">UART</span>
+          <span class="skill">I2C</span>
+        </div>
+      </div>
+      <div class="skill-card rv">
+        <div class="skill-head">Data &amp; Analysis</div>
+        <div class="skill-list">
+          <span class="skill">Tableau</span>
+          <span class="skill">Power BI</span>
+          <span class="skill">Time-Series Analysis</span>
+          <span class="skill">KNN</span>
+          <span class="skill">SVM</span>
+          <span class="skill">Random Forest</span>
+          <span class="skill">SARIMA</span>
+        </div>
+        <p class="skill-note">The model families above come from comparative evaluation of published results in my research, not from training them myself.</p>
+      </div>
+      <div class="skill-card rv">
+        <div class="skill-head">Methods</div>
+        <div class="skill-list">
+          <span class="skill">Comparative Evaluation</span>
+          <span class="skill">Controlled Experiment Design</span>
+          <span class="skill">Root Cause Analysis</span>
+          <span class="skill">Risk Prioritization</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESEARCH ================= -->
+<section class="section block-yellow" id="research">
+  <div class="wrap">
+    <span class="sec-label rv">07 / Research</span>
+    <h2 class="sec-title rv">PUBLISHED <span class="hollow">WORK</span></h2>
+
+    <div class="res-role rv">
+      <div>
+        <div class="res-role-title">Machine Learning<br/>Research Assistant</div>
+        <div class="res-role-org">Pandit Deendayal Energy University</div>
+        <div class="res-role-sub">Under Dr. Manan Shah · Two comparative analyses of machine learning for environmental prediction, one published in a Springer journal and one under review.</div>
+      </div>
+      <span class="badge red">Jan 2024 — Feb 2025</span>
+    </div>
+
+    <div class="research rv">
+      <div class="research-side">
+        <span class="doi-k">DOI</span>
+        <span class="doi-v">10.1007/<br/>s44379-025-00014-2</span>
+      </div>
+      <div class="research-main">
+        <span class="badge red">Published · Springer</span>
+        <h3 class="research-title">ML for Air Quality Index Prediction</h3>
+        <p>"Comparative Analysis of Machine Learning Algorithms for Air Quality Index Prediction" — <b>Machine Learning for Computational Science and Engineering</b>, Springer, Feb 2025, Vol. 1, Art. 14.</p>
+        <p>A comparative analysis built by compiling and comparing published results for methods including SARIMA, KNN, and SVM, to identify how AQI prediction models could be improved. The finding: hybrid models delivered the strongest predictions. The paper draws out what that means for making environmental monitoring more efficient.</p>
+        <span class="research-meta">Second Author</span>
+      </div>
+    </div>
+
+    <div class="research review rv">
+      <div class="research-side">
+        <span class="doi-k">Status</span>
+        <span class="doi-v">Under<br/>Review</span>
+      </div>
+      <div class="research-main">
+        <span class="badge violet">Manuscript</span>
+        <h3 class="research-title">ML for Rainfall Prediction</h3>
+        <p>A comparative analysis of machine learning applied to rainfall prediction, covering methods including SVM and Random Forest.</p>
+        <p>Drew on 70 published papers in weather forecasting, analyzing their claims and conclusions to recommend integrating machine learning with time-series data for trend and pattern analysis over time. Proposes location-based message blasts as instant warning systems, so people can evacuate in time during floods, cyclones, or excessive rain.</p>
+        <span class="research-meta">Primary Author &amp; Editor</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= HONORS ================= -->
+<section class="section" id="honors">
+  <div class="wrap">
+    <span class="sec-label rv">08 / Honors</span>
+    <h2 class="sec-title rv">AWARDS &amp; <span class="hollow">CREDENTIALS</span></h2>
+    <div class="hon-grid">
+      <article class="hon rv">
+        <div class="hon-head">Awards &amp; Recognition</div>
+        <div class="hon-body">
+          <ul>
+            <li><b>Member, IEEE-HKN</b> — Eta Kappa Nu, the ECE honor society at UIUC</li>
+            <li><b>James Scholar</b>, academic year 2025–26</li>
+            <li><b>Dean's List</b>, Fall 2025 and Spring 2026</li>
+            <li><b>Grainger Engineering Achievement Scholarship</b></li>
+            <li><b>A.R. "Buck" Knight Scholarship</b></li>
+            <li><b>National Representative, PETA India</b> (Valsad), since 2024</li>
+            <li><b>Young member, New York Science Academy</b> — 4% acceptance rate, 2023</li>
+            <li><b>Top 1% ISC Scholar</b>, Grade 12</li>
+            <li><b>Subject Topper</b> in Physics, Chemistry, Mathematics, English and Computer Science (Grade 12); Mathematics and Chemistry (Grade 11); Biology (Grade 10)</li>
+            <li><b>AP</b> Calculus BC 5 · Calculus AB 5 · Computer Science A 4 <span class="sc">· SAT 1500</span></li>
+          </ul>
+        </div>
+      </article>
+      <article class="hon rv">
+        <div class="hon-head">Certifications</div>
+        <div class="hon-body">
+          <ul>
+            <li><b>Investment Foundations Certificate</b> — CFA Institute <span class="sc">92%</span></li>
+            <li><b>Certification in Financial Markets</b> — National Stock Exchange of India <span class="sc">91%</span></li>
+            <li><b>Certification in Mutual Funds</b> — National Stock Exchange of India <span class="sc">79%</span></li>
+            <li><b>Tableau Desktop Specialist</b> — Pearson <span class="sc">907 / 1000</span></li>
+            <li><b>Relational Databases and SQL</b> — edX</li>
+            <li><b>Python 101 for Data Science</b> — IBM</li>
+            <li><b>Share Data Through the Art of Visualization</b> — Google</li>
+            <li><b>Python for Machine Learning and Data Science Bootcamp</b></li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VOLUNTEERING ================= -->
+<section class="section block-violet" id="volunteering">
+  <div class="wrap">
+    <span class="sec-label rv">09 / Volunteering</span>
+    <h2 class="sec-title rv">GIVING <span class="hollow">BACK</span></h2>
+    <div class="vol-grid">
+      <article class="vol rv">
+        <div class="vol-role">National Representative</div>
+        <span class="vol-org">PETA India · Animal Welfare</span>
+        <div class="vol-when">Since 2024</div>
+        <p class="vol-desc">Selected to represent my home district of Valsad as a National Representative of PETA India. Work on animal welfare and on promoting basic social attitudes and ethics toward animals.</p>
+      </article>
+      <article class="vol rv">
+        <div class="vol-role">Community Volunteer</div>
+        <span class="vol-org">United First · Social Services</span>
+        <div class="vol-when">Aug 2024 — Dec 2024</div>
+        <p class="vol-desc">Ran drives aligned to UN Sustainable Development Goals 3, 11, 13, and 15. Distributed 500 plantable pencils to local schools to promote afforestation, and helped distribute masks, gloves, boots, and helmets to sewage workers.</p>
+      </article>
+      <article class="vol rv">
+        <div class="vol-role">Group Leader</div>
+        <span class="vol-org">Ujjwal Atul Program · Environment</span>
+        <div class="vol-when">Jan 2024 — Apr 2024</div>
+        <p class="vol-desc">Led 15 students on a door-to-door campaign across 300 households, installing 80+ color-coded bins and teaching segregation and composting. Placed five clothing donation boxes at local landmarks and reached 600 students across three government schools.</p>
+      </article>
+      <article class="vol rv">
+        <div class="vol-role">Project Researcher</div>
+        <span class="vol-org">New York Science Academy · Sustainability</span>
+        <div class="vol-when">Aug 2023 — Nov 2023</div>
+        <p class="vol-desc">Studied the 20 most sustainable buildings certified under LEED and BREEAM, then proposed 11 paradigms for large residential and township projects: greywater recycling, insulated glass for maximum light and minimum thermal conduction, and green roofs against the urban heat island effect.</p>
+      </article>
+      <article class="vol rv">
+        <div class="vol-role">Companionship Volunteer</div>
+        <span class="vol-org">Helping Hand Trust · Elder Care</span>
+        <div class="vol-when">Nov 2023 — Dec 2023</div>
+        <p class="vol-desc">Worked with ten volunteers over 15 days to engage 45 residents of a local old age home in conversation, sharing life stories and joining their hobbies to reduce isolation. Celebrated Diwali with them, gifting new clothes and decorating the home.</p>
+      </article>
+      <article class="vol rv">
+        <div class="vol-role">Project Lead</div>
+        <span class="vol-org">TIDE Foundation · Literacy</span>
+        <div class="vol-when">2023</div>
+        <p class="vol-desc">Raised ₹60,600 with a colleague, ₹36,850 of it personally through a social media campaign on Give.do, and collected 150 donated books. Procured over 1,000 multilingual educational books with the funds and distributed them across six local schools.</p>
+      </article>
+      <article class="vol rv">
+        <div class="vol-role">Educational Content Creator</div>
+        <span class="vol-org">TIDE Foundation · Education</span>
+        <div class="vol-when">May 2023 — Dec 2023</div>
+        <p class="vol-desc">Created eight animated educational videos for underprivileged children, curating stories from <i>Tenali Rama</i> and <i>Panchatantra</i>. Made a version of each in five languages: Kutchi, Kathiawadi, Gujarati, Hindi, and Marwari — contributing scriptwriting, animation design, and voiceover.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="section" id="contact">
+  <div class="wrap">
+    <div class="contact-box rv">
+      <h2>LET'S BUILD<br/>SOMETHING.</h2>
+      <a class="mail" href="mailto:svk7@illinois.edu" id="mail-link">svk7@illinois.edu</a>
+      <div class="resume-row center">
+        <span class="rr-k">Download Résumé</span>
+        <div class="rr-btns">
+          <a class="btn" href="ShivamVipulKapadia_Resume_SWE.pdf" download="Shivam Vipul Kapadia SWE.pdf">SWE <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="btn" href="ShivamVipulKapadia_Resume_Embedded.pdf" download="Shivam Vipul Kapadia EE Embedded.pdf">Embedded <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="btn" href="ShivamVipulKapadia_Resume_Research.pdf" download="Shivam Vipul Kapadia Research.pdf">Research <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="btn" href="ShivamVipulKapadia_Resume_Consulting.pdf" download="Shivam Vipul Kapadia Tech Consulting.pdf">Consulting <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+      <div class="contact-actions">
+        <a class="btn btn-accent" href="https://www.linkedin.com/in/shivam-kapadia" target="_blank" rel="noopener">
+          LinkedIn
+          <svg viewBox="0 0 24 24"><path d="M7 17V10M7 7v.01M12 17v-4a3 3 0 016 0v4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn" href="https://github.com/shivamvkapadia" target="_blank" rel="noopener">
+          GitHub
+          <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 00-.9-2.6c3-.3 6.2-1.5 6.2-6.7A5.2 5.2 0 0019.9 4a4.9 4.9 0 00-.1-3.6s-1.1-.3-3.7 1.4a12.7 12.7 0 00-6.6 0C6.9.1 5.8.4 5.8.4A4.9 4.9 0 005.7 4a5.2 5.2 0 00-1.4 3.7c0 5.2 3.2 6.4 6.2 6.7a3.4 3.4 0 00-.9 2.6V21" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <span class="c">© 2026 Shivam Vipul Kapadia</span>
+    <div class="foot-links">
+      <a href="mailto:svk7@illinois.edu">svk7@illinois.edu</a>
+      <a href="tel:+12175307553">217-530-7553</a>
+      <a href="https://www.linkedin.com/in/shivam-kapadia" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/shivamvkapadia" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<div class="rmodal" id="rmodal" role="dialog" aria-modal="true" aria-labelledby="rmodal-title">
+  <div class="rmodal-box">
+    <div class="rmodal-head">
+      <h2 id="rmodal-title">Pick a Résumé</h2>
+      <button class="rmodal-x" id="rmodal-x" aria-label="Close">✕</button>
+    </div>
+    <div class="rmodal-list">
+      <a class="rpick" href="ShivamVipulKapadia_Resume_SWE.pdf" download="Shivam Vipul Kapadia SWE.pdf">
+        <div><b>Software Engineering</b><span>Backend, full-stack and AI work</span></div>
+        <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="rpick" href="ShivamVipulKapadia_Resume_Embedded.pdf" download="Shivam Vipul Kapadia EE Embedded.pdf">
+        <div><b>Embedded &amp; Hardware</b><span>STM32, analog circuits and robotics</span></div>
+        <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="rpick" href="ShivamVipulKapadia_Resume_Research.pdf" download="Shivam Vipul Kapadia Research.pdf">
+        <div><b>Research</b><span>Machine learning research and publications</span></div>
+        <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="rpick" href="ShivamVipulKapadia_Resume_Consulting.pdf" download="Shivam Vipul Kapadia Tech Consulting.pdf">
+        <div><b>Tech Consulting</b><span>Client work, finance and leadership</span></div>
+        <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div id="toast">✓ Copied</div>
+
+<script>
+(function(){
+  var $ = function(s){ return document.querySelector(s); };
+  var $$ = function(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); };
+
+  /* ---- toast ---- */
+  var toast = $('#toast');
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(function(){ toast.classList.remove('show'); }, 1800);
+  }
+
+  /* ---- resume picker ---- */
+  var rmodal = $('#rmodal'), lastFocus = null;
+  function setPicker(v){
+    rmodal.classList.toggle('open', v);
+    document.body.style.overflow = v ? 'hidden' : '';
+    if(v){ lastFocus = document.activeElement; $('.rpick').focus(); }
+    else if(lastFocus){ lastFocus.focus(); }
+  }
+  ['#nav-resume'].forEach(function(sel){
+    var el = $(sel);
+    if(el){ el.setAttribute('aria-haspopup','dialog'); el.addEventListener('click', function(){ setPicker(true); }); }
+  });
+  $('#rmodal-x').addEventListener('click', function(){ setPicker(false); });
+  rmodal.addEventListener('click', function(e){ if(e.target === rmodal) setPicker(false); });
+  $$('.rpick').forEach(function(a){ a.addEventListener('click', function(){ setPicker(false); }); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && rmodal.classList.contains('open')) setPicker(false);
+  });
+
+  /* ---- mobile drawer ---- */
+  var burger = $('#burger'), drawer = $('#drawer'), open = false;
+  function setMenu(v){
+    open = v;
+    burger.classList.toggle('open', v);
+    drawer.classList.toggle('open', v);
+    burger.setAttribute('aria-expanded', String(v));
+    document.body.style.overflow = v ? 'hidden' : '';
+  }
+  burger.addEventListener('click', function(){ setMenu(!open); });
+  $$('#drawer a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false); }); });
+
+  /* ---- copy email ---- */
+  var mail = $('#mail-link');
+  if(mail){
+    mail.addEventListener('click', function(){
+      if(navigator.clipboard){
+        navigator.clipboard.writeText('svk7@illinois.edu').then(function(){ showToast('✓ Email copied'); });
+      }
+    });
+  }
+
+  /* ---- scroll reveal ---- */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  $$('.rv').forEach(function(el){ io.observe(el); });
+
+  /* ---- easter egg: click the minifigure ---- */
+  var wrap = $('#figure-wrap'), shades = $('#shades'), sparkLayer = $('#spark-layer');
+  var on = false;
+  var emojis = ['★','✦','✧','●','■'];
+  function sparkle(){
+    for(var i=0;i<10;i++){
+      (function(){
+        var s = document.createElement('span');
+        s.className = 'spark';
+        s.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+        s.style.left = (12 + Math.random()*76) + '%';
+        s.style.top  = (8 + Math.random()*62) + '%';
+        s.style.color = ['#FF6B6B','#FFD93D','#C4B5FD','#000'][Math.floor(Math.random()*4)];
+        s.style.animationDelay = (Math.random()*0.2) + 's';
+        s.style.fontSize = (16 + Math.random()*18) + 'px';
+        sparkLayer.appendChild(s);
+        setTimeout(function(){ s.remove(); }, 1100);
+      })();
+    }
+  }
+  if(wrap){
+    wrap.addEventListener('click', function(){
+      on = !on;
+      shades.classList.toggle('on', on);
+      wrap.classList.remove('pop'); void wrap.offsetWidth; wrap.classList.add('pop');
+      sparkle();
+      if(on) showToast('😎 Cool mode activated');
+    });
+  }
+})();
+</script>
+</body>
+</html>
